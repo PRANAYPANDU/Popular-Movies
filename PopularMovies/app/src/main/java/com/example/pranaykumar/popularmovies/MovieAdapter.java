@@ -31,10 +31,10 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
     Movie currentMovie=getItem(position);
 
     ImageView posterImageView=(ImageView)gridItemView.findViewById(R.id.poster);
-    posterImageView.setImageResource(currentMovie.getmImageResourceID());
-
-    TextView titleTextView=(TextView)gridItemView.findViewById(R.id.title);
-    titleTextView.setText(currentMovie.getmMovieTitle());
+    //posterImageView.setImageResource(currentMovie.getmImageResourceID());
+      posterImageView.setImageResource(R.drawable.img1);
+    //TextView titleTextView=(TextView)gridItemView.findViewById(R.id.title);
+    //titleTextView.setText(currentMovie.getmMovieTitle());
 
     return gridItemView;
   }

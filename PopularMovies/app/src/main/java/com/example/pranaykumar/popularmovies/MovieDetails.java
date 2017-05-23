@@ -30,12 +30,12 @@ public class MovieDetails extends AppCompatActivity {
     Bundle b=intent.getExtras();
     Movie currentMovie=b.getParcelable("movie");
     String movieTitle=currentMovie.getmMovieTitle();
-    int posterId=currentMovie.getmImageResourceID();
+    String posterId=currentMovie.getmImageResourceID();
     String movieOverView=currentMovie.getmOverView();
     String movieRating= String.valueOf(currentMovie.getmRating());
     String movieReleaseDate=currentMovie.getmDate();
     mTitle.setText(movieTitle);
-    mPoster.setImageResource(posterId);
+    //mPoster.setImageResource(posterId);
     mOverView.setText(movieOverView);
     mRating.setText(movieRating);
     mDate.setText(movieReleaseDate);

@@ -12,9 +12,10 @@ public class Movie implements Parcelable{
   private String mMovieTitle;
 
   //darawable resource ID
-  private int mImageResourceID;
+  //private int mImageResourceID;
+  private String mImageResourceID;
   private String mOverView;
-  private int mRating;
+  private double mRating;
   private String mDate;
 
   /*
@@ -24,7 +25,7 @@ public class Movie implements Parcelable{
   * @param imageResourceID is the drawable reference iD that corresponds to the movie
   * */
 
-  public Movie(String vTitle,int imageResourceID,String vOverView,int vRating,String vDate){
+  public Movie(String vTitle,String imageResourceID,String vOverView,double vRating,String vDate){
     mMovieTitle=vTitle;
     mImageResourceID=imageResourceID;
     mOverView=vOverView;
@@ -34,9 +35,9 @@ public class Movie implements Parcelable{
 
   public Movie(Parcel source) {
     mMovieTitle=source.readString();
-    mImageResourceID=source.readInt();
+    mImageResourceID=source.readString();
     mOverView=source.readString();
-    mRating=source.readInt();
+    mRating=source.readDouble();
     mDate=source.readString();
   }
 
@@ -46,13 +47,13 @@ public class Movie implements Parcelable{
   }
 
   //Get image resource ID
-  public int getmImageResourceID(){
+  public String getmImageResourceID(){
     return mImageResourceID;
   }
 
   public String getmOverView(){return mOverView;}
 
-  public int getmRating(){return mRating;}
+  public double getmRating(){return mRating;}
 
   public String getmDate(){return mDate;}
 
@@ -62,9 +63,9 @@ public class Movie implements Parcelable{
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(mMovieTitle);
-    dest.writeInt(mImageResourceID);
+    dest.writeString(mImageResourceID);
     dest.writeString(mOverView);
-    dest.writeInt(mRating);
+    dest.writeDouble(mRating);
     dest.writeString(mDate);
   }
   public static final Parcelable.Creator CREATOR
