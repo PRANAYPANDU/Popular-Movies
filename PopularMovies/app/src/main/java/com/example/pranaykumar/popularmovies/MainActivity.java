@@ -20,15 +20,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   private static final int MOVIES_LOADER_ID=1;
 
   //URL for popular movies,insert your API key in place of YourAPIKey
-  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=YourAPIKey";
+  private static final String PopularMoviesDB_REQUEST_URL= String.valueOf(R.string.popularMoviesURL);
   //URL for top rated movies,insert your API key in place of YourAPIKey
-  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=YourAPIKey";
+  private static final String top_ratedMoviesDB_REQUEST_URL=String.valueOf(R.string.topRatedMoviesURL);
 
-  private String final_url=PopularmoviesDB_REQUEST_URL;
+  private String final_url=PopularMoviesDB_REQUEST_URL;
 
   private MovieAdapter movieAdapter;
 
-  /**TextView that is displayed when the lsit is empty*/
+  /**TextView that is displayed when the list is empty*/
   private TextView mEmptyStateTextView;
 
   @Override
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     switch (item.getItemId()){
       //Respond to a click on the "Popular Movies" menu option
       case R.id.sortBy_popularMovies:
-        final_url=PopularmoviesDB_REQUEST_URL;
+        final_url=PopularMoviesDB_REQUEST_URL;
         getLoaderManager().restartLoader(MOVIES_LOADER_ID, null,this);
         setTitle(getString(R.string.app_name));
         return true;

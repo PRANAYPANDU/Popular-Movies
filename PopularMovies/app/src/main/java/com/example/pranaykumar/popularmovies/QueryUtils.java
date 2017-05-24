@@ -46,15 +46,16 @@ public class QueryUtils {
     ArrayList<Movie>movies=new ArrayList<>();
     try {
       JSONObject baseJson=new JSONObject(jsonResponse);
-      JSONArray results=baseJson.getJSONArray("results");
+      JSONArray results=baseJson.getJSONArray(String.valueOf(R.string.results_query_word));
 
       for(int i=0;i<results.length();i++){
         JSONObject currentMovie=results.getJSONObject(i);
-        String poster_path=currentMovie.getString("poster_path");
-        String overView=currentMovie.getString("overview");
-        String title=currentMovie.getString("original_title");
-        Double rating=currentMovie.getDouble("vote_average");
-        String Rdate=currentMovie.getString("release_date");
+        String poster_path=currentMovie.getString(String.valueOf(R.string.poster_query_word));
+        String overView=currentMovie.getString(String.valueOf(R.string.overview_query_word));
+        String title=currentMovie.getString(String.valueOf(R.string.title_query_word));
+        Double rating=currentMovie.getDouble(String.valueOf(R.string.rating_query_word));
+
+        String Rdate=currentMovie.getString(String.valueOf(R.string.release_date_query_word));
 
         Movie movie=new Movie(title,poster_path,overView,rating,Rdate);
         movies.add(movie);
@@ -78,24 +79,24 @@ public class QueryUtils {
     InputStream inputStream=null;
     try{
       urlConnection=(HttpURLConnection)url.openConnection();
-      Log.i("MESSAGE","Connection opened");
+      Log.i(LOG_TAG,String.valueOf(R.string.connection_opened));
       urlConnection.setReadTimeout(10000/*milliseconds*/);
       urlConnection.setConnectTimeout(15000);
       urlConnection.setRequestMethod("GET");
       urlConnection.connect();
-      Log.i(LOG_TAG,"Connected");
+      Log.i(LOG_TAG,String.valueOf(R.string.connected));
 
       //If the request was succesful (response code 200),
       //then read the input stream and parse the response.
       if(urlConnection.getResponseCode()==200){
         inputStream=urlConnection.getInputStream();
         jsonResponse=readFromStream(inputStream);
-        Log.i(LOG_TAG,"got response code"+urlConnection.getResponseCode());
+        Log.i(LOG_TAG,String.valueOf(R.string.responseCode)+urlConnection.getResponseCode());
       }else{
-        Log.e(LOG_TAG,"got response code :"+urlConnection.getResponseCode());
+        Log.e(LOG_TAG,String.valueOf(R.string.responseCode)+urlConnection.getResponseCode());
       }
     } catch (IOException e) {
-      Log.e(LOG_TAG,"Problem retrieving informtaion");
+      Log.e(LOG_TAG,String.valueOf(R.string.ERROR_MESSAGE));
     }finally {
       if(urlConnection!=null){
         urlConnection.disconnect();
@@ -139,7 +140,7 @@ public class QueryUtils {
     try {
       url=new URL(requestUrl);
     } catch (MalformedURLException e) {
-      Log.e("ERROR","Problem building the URL");
+      Log.e(LOG_TAG,String.valueOf(R.string.ERROR_URL));
     }
     return url;
   }
