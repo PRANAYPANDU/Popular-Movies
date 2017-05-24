@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by PRANAYKUMAR on 21-05-2017.
@@ -41,6 +42,8 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
     Picasso.with(getContext()).load(finalPosterUrl).into(posterImageView);
 
 
+
     return gridItemView;
   }
+
 }

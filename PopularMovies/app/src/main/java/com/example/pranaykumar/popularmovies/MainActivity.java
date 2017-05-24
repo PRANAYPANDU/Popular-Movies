@@ -12,7 +12,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import java.util.ArrayList;
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Movie>>{
   private static final int MOVIES_LOADER_ID=1;
@@ -21,7 +23,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   private String final_url=PopularmoviesDB_REQUEST_URL;
   private static final String LOG_TAG=MainActivity.class.getSimpleName();
   private MovieAdapter movieAdapter;
-  @Override protected void onCreate(Bundle savedInstanceState) {
+
+  /**TextView that is displayed when the lsit is empty*/
+  private TextView mEmptyStateTextView;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     final ArrayList<Movie> movies=new ArrayList<Movie>();
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
@@ -38,8 +45,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     movies.add(new Movie("Pirates of the Caribbean","R.drawable.img8","nice Movieasasssssssssss",4,"22-5-2016"));
     movies.add(new Movie("Perfume","R.drawable.img9","nice Movieadssdddddddddddasss",4,"22-5-2016"));
     */
-    movieAdapter=new MovieAdapter(this,movies);
     GridView gridView=(GridView)findViewById(R.id.grid_view);
+
+    mEmptyStateTextView=(TextView)findViewById(R.id.empty_view);
+
+    movieAdapter=new MovieAdapter(this,movies);
     gridView.setAdapter(movieAdapter);
 
     //Setup the item click listener
@@ -69,6 +79,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       // because this activity implements the LoaderCallbacks interface).
       loaderManager.initLoader(MOVIES_LOADER_ID,null,this);
     }
+    else{
+      View loadingIndicator=findViewById(R.id.loading_indicator);
+      loadingIndicator.setVisibility(View.GONE);
+
+      mEmptyStateTextView.setText(R.string.no_internet_connection);
+    }
   }
   @Override public Loader<ArrayList<Movie>> onCreateLoader(int id, Bundle args) {
 
@@ -76,10 +92,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   }
 
   @Override public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
+    View loadingIndicator = findViewById(R.id.loading_indicator);
+    loadingIndicator.setVisibility(View.GONE);
+    // Set empty state text to display "No Movies found."
+    mEmptyStateTextView.setText(R.string.no_movies);
     movieAdapter.clear();
 
     if(data!=null&&!data.isEmpty()){
       movieAdapter.addAll(data);
+      mEmptyStateTextView.setVisibility(View.GONE);
     }
   }
 
