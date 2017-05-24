@@ -1,6 +1,7 @@
 package com.example.pranaykumar.popularmovies;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
@@ -32,9 +34,12 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
 
     ImageView posterImageView=(ImageView)gridItemView.findViewById(R.id.poster);
     //posterImageView.setImageResource(currentMovie.getmImageResourceID());
-      posterImageView.setImageResource(R.drawable.img1);
     //TextView titleTextView=(TextView)gridItemView.findViewById(R.id.title);
     //titleTextView.setText(currentMovie.getmMovieTitle());
+    String basePosterUrl="http://image.tmdb.org/t/p//w185/";
+    String finalPosterUrl=basePosterUrl+currentMovie.getmImageResourceID();
+    Picasso.with(getContext()).load(finalPosterUrl).into(posterImageView);
+
 
     return gridItemView;
   }

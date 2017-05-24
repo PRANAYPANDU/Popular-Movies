@@ -1,12 +1,15 @@
 package com.example.pranaykumar.popularmovies;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
 
 public class MovieDetails extends AppCompatActivity {
 
@@ -36,6 +39,11 @@ public class MovieDetails extends AppCompatActivity {
     String movieReleaseDate=currentMovie.getmDate();
     mTitle.setText(movieTitle);
     //mPoster.setImageResource(posterId);
+    String basePosterUrl="http://image.tmdb.org/t/p//w185/";
+    String finalPosterUrl=basePosterUrl+posterId;
+    Context context=this;
+    Picasso.with(context).load(finalPosterUrl).into(mPoster);
+
     mOverView.setText(movieOverView);
     mRating.setText(movieRating);
     mDate.setText(movieReleaseDate);
