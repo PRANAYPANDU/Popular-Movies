@@ -68,8 +68,8 @@ public class Movie implements Parcelable{
     dest.writeDouble(mRating);
     dest.writeString(mDate);
   }
-  public static final Parcelable.Creator CREATOR
-      = new Parcelable.Creator() {
+  public static final Parcelable.Creator<Movie> CREATOR
+      = new Parcelable.Creator<Movie>() {
     @Override public Movie createFromParcel(Parcel source) {
       return new Movie(source);
     }

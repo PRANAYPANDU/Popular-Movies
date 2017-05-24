@@ -1,5 +1,4 @@
 package com.example.pranaykumar.popularmovies;
-
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +7,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -16,15 +16,18 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Movie>>{
   private static final int MOVIES_LOADER_ID=1;
-  private static final String moviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936";
+  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936";
+  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=857710a9c17b11d80aa32f98d00aa936";
+  private String final_url=PopularmoviesDB_REQUEST_URL;
   private static final String LOG_TAG=MainActivity.class.getSimpleName();
   private MovieAdapter movieAdapter;
   @Override protected void onCreate(Bundle savedInstanceState) {
+    final ArrayList<Movie> movies=new ArrayList<Movie>();
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
     //Create an ArrayList of Movie Objects with Movie poster and title
-    final ArrayList<Movie> movies=new ArrayList<Movie>();
+
     /*movies.add(new Movie("Beauty and the Beast","R.drawable.img1","nicdfffffffffe Movie",4,"22-5-2016"));
     movies.add(new Movie("Fight Club","R.drawable.img2","nice Mosfffffffffffffffffffffvie",5,"22-5-2016"));
     movies.add(new Movie("Saving Private Ryan","R.drawable.img3","nice Movsaaaaaaaaie",4,"22-5-2016"));
@@ -36,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     movies.add(new Movie("Perfume","R.drawable.img9","nice Movieadssdddddddddddasss",4,"22-5-2016"));
     */
     movieAdapter=new MovieAdapter(this,movies);
-
-
     GridView gridView=(GridView)findViewById(R.id.grid_view);
     gridView.setAdapter(movieAdapter);
 
@@ -69,10 +70,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       loaderManager.initLoader(MOVIES_LOADER_ID,null,this);
     }
   }
-
   @Override public Loader<ArrayList<Movie>> onCreateLoader(int id, Bundle args) {
 
-    return new MoviesLoader(this,moviesDB_REQUEST_URL);
+    return new MoviesLoader(this,final_url);
   }
 
   @Override public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
@@ -86,5 +86,32 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   @Override public void onLoaderReset(Loader<ArrayList<Movie>> loader) {
     //Loader reset,so we can clear out our existing data.
     movieAdapter.clear();
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    //inflate the menu options from the res/menu/sort.xml
+    //This adds menu items to the app bar.
+    getMenuInflater().inflate(R.menu.sort,menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+
+    //User clicked on a menu option in the app bar overflow menu
+    switch (item.getItemId()){
+      //Respond to a click on the "Popular Movies" menu option
+      case R.id.sortBy_popularMovies:
+        final_url=PopularmoviesDB_REQUEST_URL;
+        getLoaderManager().restartLoader(MOVIES_LOADER_ID, null,this);
+        setTitle(getString(R.string.app_name));
+        return true;
+      case R.id.sortBy_top_rated_Movies:
+        final_url=top_ratedMoviesDB_REQUEST_URL;
+        getLoaderManager().restartLoader(MOVIES_LOADER_ID, null,this);
+        setTitle(getString(R.string.sortBy_top_rated_Movies));
+        return true;
+
+    }
+    return super.onOptionsItemSelected(item);
   }
 }

@@ -29,6 +29,8 @@ public class MovieDetails extends AppCompatActivity {
     mRating=(TextView)findViewById(R.id.ratingTextView);
     mOverView=(TextView)findViewById(R.id.overviewTextView);
 
+    setTitle(R.string.Movie_details);
+
     Intent intent=getIntent();
     Bundle b=intent.getExtras();
     Movie currentMovie=b.getParcelable("movie");
@@ -50,5 +52,9 @@ public class MovieDetails extends AppCompatActivity {
 
 
 
+  }
+
+  @Override public void onBackPressed() {
+    super.onBackPressed();
   }
 }
