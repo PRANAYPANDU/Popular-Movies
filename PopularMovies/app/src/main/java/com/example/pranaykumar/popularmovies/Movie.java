@@ -1,5 +1,4 @@
 package com.example.pranaykumar.popularmovies;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -10,10 +9,7 @@ import android.os.Parcelable;
 public class Movie implements Parcelable{
   //Title of the movie
   private String mMovieTitle;
-
-  //darawable resource ID
-  //private int mImageResourceID;
-  private String mImageResourceID;
+  private String mImageResourceURL;
   private String mOverView;
   private double mRating;
   private String mDate;
@@ -25,9 +21,9 @@ public class Movie implements Parcelable{
   * @param imageResourceID is the drawable reference iD that corresponds to the movie
   * */
 
-  public Movie(String vTitle,String imageResourceID,String vOverView,double vRating,String vDate){
+  public Movie(String vTitle,String imageResourceURL,String vOverView,double vRating,String vDate){
     mMovieTitle=vTitle;
-    mImageResourceID=imageResourceID;
+    mImageResourceURL=imageResourceURL;
     mOverView=vOverView;
     mRating=vRating;
     mDate=vDate;
@@ -35,7 +31,7 @@ public class Movie implements Parcelable{
 
   public Movie(Parcel source) {
     mMovieTitle=source.readString();
-    mImageResourceID=source.readString();
+    mImageResourceURL=source.readString();
     mOverView=source.readString();
     mRating=source.readDouble();
     mDate=source.readString();
@@ -48,7 +44,7 @@ public class Movie implements Parcelable{
 
   //Get image resource ID
   public String getmImageResourceID(){
-    return mImageResourceID;
+    return mImageResourceURL;
   }
 
   public String getmOverView(){return mOverView;}
@@ -63,7 +59,7 @@ public class Movie implements Parcelable{
 
   @Override public void writeToParcel(Parcel dest, int flags) {
     dest.writeString(mMovieTitle);
-    dest.writeString(mImageResourceID);
+    dest.writeString(mImageResourceURL);
     dest.writeString(mOverView);
     dest.writeDouble(mRating);
     dest.writeString(mDate);

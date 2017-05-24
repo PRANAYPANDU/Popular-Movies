@@ -14,14 +14,18 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 import java.util.ArrayList;
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Movie>>{
+
   private static final int MOVIES_LOADER_ID=1;
-  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936";
-  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=857710a9c17b11d80aa32f98d00aa936";
+
+  //URL for popular movies,insert your API key in place of YourAPIKey
+  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=YourAPIKey";
+  //URL for top rated movies,insert your API key in place of YourAPIKey
+  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=YourAPIKey";
+
   private String final_url=PopularmoviesDB_REQUEST_URL;
-  private static final String LOG_TAG=MainActivity.class.getSimpleName();
+
   private MovieAdapter movieAdapter;
 
   /**TextView that is displayed when the lsit is empty*/
@@ -33,18 +37,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    //Create an ArrayList of Movie Objects with Movie poster and title
-
-    /*movies.add(new Movie("Beauty and the Beast","R.drawable.img1","nicdfffffffffe Movie",4,"22-5-2016"));
-    movies.add(new Movie("Fight Club","R.drawable.img2","nice Mosfffffffffffffffffffffvie",5,"22-5-2016"));
-    movies.add(new Movie("Saving Private Ryan","R.drawable.img3","nice Movsaaaaaaaaie",4,"22-5-2016"));
-    movies.add(new Movie("the silence of the lambs","R.drawable.img4","nicessssssssssssssssssdd Movie",4,"22-5-2016"));
-    movies.add(new Movie("Moonlight","R.drawable.img5","nice Movisssddddddddddde",4,"22-5-2016"));
-    movies.add(new Movie("The Grey","R.drawable.img6","nice Movidcdccccccccccccccccccccsssssssssssssssssffffffffffffe",4,"22-5-2016"));
-    movies.add(new Movie("Naya","R.drawable.img7","nice Movdvddfsdfffffffffffffffffffffie",4,"22-5-2016"));
-    movies.add(new Movie("Pirates of the Caribbean","R.drawable.img8","nice Movieasasssssssssss",4,"22-5-2016"));
-    movies.add(new Movie("Perfume","R.drawable.img9","nice Movieadssdddddddddddasss",4,"22-5-2016"));
-    */
     GridView gridView=(GridView)findViewById(R.id.grid_view);
 
     mEmptyStateTextView=(TextView)findViewById(R.id.empty_view);
