@@ -5,8 +5,8 @@
   <string name="Movie_details">Movie Details</string>
   <string name="no_internet_connection">No Internet Connection</string>
   <string name="no_movies">No Movies found.</string>
-  <string name="popularMoviesURL">http://api.themoviedb.org/3/movie/top_rated?api_key=YourAPIKey</string>
-  <string name="topRatedMoviesURL">http://api.themoviedb.org/3/movie/top_rated?api_key=YourAPIKey</string>
+  <string name="popularMoviesURL">http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936</string>
+  <string name="topRatedMoviesURL">http://api.themoviedb.org/3/movie/top_rated?api_key=857710a9c17b11d80aa32f98d00aa936</string>
   <string name="results_query_word">results</string>
   <string name="poster_query_word">poster_path</string>
   <string name="overview_query_word">overview</string>

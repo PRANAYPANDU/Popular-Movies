@@ -32,9 +32,11 @@ public class MovieAdapter extends ArrayAdapter<Movie>{
 
     ImageView posterImageView=(ImageView)gridItemView.findViewById(R.id.poster);
 
-    String basePosterUrl=String.valueOf(R.string.base_poster_URL);
+    String basePosterUrl="http://image.tmdb.org/t/p//w185/";
     String finalPosterUrl=basePosterUrl+currentMovie.getmImageResourceID();
     Picasso.with(getContext()).load(finalPosterUrl).into(posterImageView);
+
+
 
     return gridItemView;
   }
