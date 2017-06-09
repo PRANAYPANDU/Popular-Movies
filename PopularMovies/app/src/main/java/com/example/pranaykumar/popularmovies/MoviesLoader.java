@@ -9,12 +9,12 @@ import java.util.ArrayList;
  */
 
 public class MoviesLoader extends AsyncTaskLoader<ArrayList<Movie>> {
-  private static final String LOG_TAG=MoviesLoader.class.getSimpleName();
+  private static final String LOG_TAG = MoviesLoader.class.getSimpleName();
   private String mUrl;
-  public MoviesLoader(Context context,String movies_url) {
-    super(context);
-    mUrl=movies_url;
 
+  public MoviesLoader(Context context, String movies_url) {
+    super(context);
+    mUrl = movies_url;
   }
 
   @Override protected void onStartLoading() {
@@ -22,10 +22,10 @@ public class MoviesLoader extends AsyncTaskLoader<ArrayList<Movie>> {
   }
 
   @Override public ArrayList<Movie> loadInBackground() {
-    if(mUrl==null){
+    if (mUrl == null) {
       return null;
     }
-    ArrayList<Movie>moviesFeed=QueryUtils.fetchMovies(mUrl);
+    ArrayList<Movie> moviesFeed = QueryUtils.fetchMovies(mUrl);
     return moviesFeed;
   }
 }

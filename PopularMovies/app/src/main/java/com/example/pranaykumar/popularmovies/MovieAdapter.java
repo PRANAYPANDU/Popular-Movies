@@ -15,30 +15,26 @@ import java.util.ArrayList;
  * Created by PRANAYKUMAR on 21-05-2017.
  */
 
-public class MovieAdapter extends ArrayAdapter<Movie>{
-  public MovieAdapter(Activity context,ArrayList<Movie> movies){
-    super(context,0,movies);
+public class MovieAdapter extends ArrayAdapter<Movie> {
+  public MovieAdapter(Activity context, ArrayList<Movie> movies) {
+    super(context, 0, movies);
   }
 
   @NonNull @Override
   public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
     //Check if existing view is being reused,otherwise inflate  the view
-    View gridItemView=convertView;
-    if(gridItemView==null){
-      gridItemView= LayoutInflater.from(getContext()).inflate(
-          R.layout.grid_item,parent,false);
+    View gridItemView = convertView;
+    if (gridItemView == null) {
+      gridItemView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);
     }
-    Movie currentMovie=getItem(position);
+    Movie currentMovie = getItem(position);
 
-    ImageView posterImageView=(ImageView)gridItemView.findViewById(R.id.poster);
+    ImageView posterImageView = (ImageView) gridItemView.findViewById(R.id.poster);
 
-    String basePosterUrl="http://image.tmdb.org/t/p//w185/";
-    String finalPosterUrl=basePosterUrl+currentMovie.getmImageResourceID();
+    String basePosterUrl = "http://image.tmdb.org/t/p//w185/";
+    String finalPosterUrl = basePosterUrl + currentMovie.getmImageResourceID();
     Picasso.with(getContext()).load(finalPosterUrl).into(posterImageView);
-
-
 
     return gridItemView;
   }
-
 }
