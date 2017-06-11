@@ -1,6 +1,7 @@
 package com.example.pranaykumar.popularmovies;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
@@ -12,9 +13,13 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import com.example.pranaykumar.popularmovies.data.PopularMoviesContract;
+import com.example.pranaykumar.popularmovies.data.PopularMoviesContract.FavouriteMoviesEntry;
 import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +39,7 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
   private TextView mOverView;
   private TextView mTrailer1;
   private TextView mTrailer2;
+  private ImageButton favMarkButton;
   ArrayList<String> sTrailers;
   ArrayList<String> sReviews;
   String videosURL;
@@ -45,6 +51,8 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
   String movieReleaseDate;
   String id;
   String ReviewsTotal="";
+  int markedFav=0;
+  String finalPosterUrl;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -58,6 +66,7 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     mReviews=(TextView)findViewById(R.id.text_view_reviews);
     mTrailer1=(TextView)findViewById(R.id.textViewTrailer1);
     mTrailer2=(TextView)findViewById(R.id.textViewTrailer2) ;
+    favMarkButton=(ImageButton)findViewById(R.id.markAsFavButton);
     setTitle(R.string.Movie_details);
     PlayVideoOnClickListener clickListener=new PlayVideoOnClickListener();
     mTrailer1.setOnClickListener(clickListener);
@@ -90,10 +99,11 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     //Base URL for poster Url
     String basePosterUrl = "http://image.tmdb.org/t/p//w185/";
     //Final URL to be passed into Picasso
-    String finalPosterUrl = basePosterUrl + posterId;
+    finalPosterUrl = basePosterUrl + posterId;
 
     Context context = this;
     Picasso.with(context).load(finalPosterUrl).into(mPoster);
+    movieRating=movieRating+"/10";
 
     mDate.setText(dt1.format(date));
     mTitle.setText(movieTitle);
@@ -109,27 +119,54 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     if (networkInfo != null && networkInfo.isConnected()) {
       android.app.LoaderManager loaderManager = getLoaderManager();
       loaderManager.initLoader(LOADER_ID, null, this);
-
-
     }
-    /*//Base URL for poster Url
-    String basePosterUrl = "http://image.tmdb.org/t/p//w185/";
-    //Final URL to be passed into Picasso
-    String finalPosterUrl = basePosterUrl + posterId;
 
-    Context context = this;
-    Picasso.with(context).load(finalPosterUrl).into(mPoster);
+    favMarkButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (markedFav == 0) {
+          String message = movieTitle + " marked as Favourite";
+          Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
+          favMarkButton.setImageResource(R.drawable.ic_stars_orange_800_36dp);
+          addToDb();
+          markedFav = 1;
 
-    mDate.setText(dt1.format(date));
-    mTitle.setText(movieTitle);
-    mOverView.setText(movieOverView);
-    mRating.setText(movieRating);
-    */
+        }
+        else if(markedFav==1){
+          String message=movieTitle+" removed from Favourites";
+          Toast.makeText(v.getContext(),message,Toast.LENGTH_SHORT).show();
+          favMarkButton.setImageResource(R.drawable.ic_stars_black_36dp);
+          removeFromFav();
+          markedFav=0;
+        }
+      }
+    });
 
 
 
   }
 
+  private void removeFromFav() {
+    Uri uri= FavouriteMoviesEntry.CONTENT_URI;
+    uri=uri.buildUpon().appendPath(id).build();
+    getContentResolver().delete(uri,null,null);
+    finish();
+
+  }
+
+  private void addToDb() {
+    ContentValues contentValues=new ContentValues();
+
+    contentValues.put(FavouriteMoviesEntry.COLUMN_NAME,mTitle.getText().toString());
+    contentValues.put(FavouriteMoviesEntry.COLUMN_POSTER,finalPosterUrl);
+    contentValues.put(FavouriteMoviesEntry.COLUMN_DATE,mDate.getText().toString());
+    contentValues.put(FavouriteMoviesEntry.COLUMN_RATING,mRating.getText().toString());
+    contentValues.put(FavouriteMoviesEntry.COLUMN_OVERVIEW,mOverView.getText().toString());
+    contentValues.put(FavouriteMoviesEntry.COLUMN_MOVIE_ID,id);
+
+    getContentResolver().insert(FavouriteMoviesEntry.CONTENT_URI,contentValues);
+    finish();
+  }
 
   @Override
   public Loader<ArrayList<ArrayList<String>>> onCreateLoader(int id,
@@ -162,7 +199,15 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     }
     int t = sTrailers.size();
     mTrailer1.setTag(sTrailers.get(0));
-    mTrailer2.setTag(sTrailers.get(1));
+    if(t>=2){
+      mTrailer2.setTag(sTrailers.get(1));
+    }
+    else{
+      mTrailer2.setVisibility(View.INVISIBLE);
+      findViewById(R.id.playVideoBtn2).setVisibility(View.INVISIBLE);
+
+    }
+
     mReviews.setText(Html.fromHtml(ReviewsTotal));
 
   }
