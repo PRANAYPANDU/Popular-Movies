@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.CancellationSignal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat.CryptoObject;
 import android.util.Log;
 import com.example.pranaykumar.popularmovies.data.PopularMoviesContract.FavouriteMoviesEntry;
 

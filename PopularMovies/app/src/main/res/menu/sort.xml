@@ -15,5 +15,9 @@
     android:title="@string/sortBy_top_rated_Movies"
     app:showAsAction="never"
     />
+  <item
+    android:id="@+id/sortBy_favourite_Movies"
+    android:title="@string/favourite_movies"
+    app:showAsAction="never"/>
 
 </menu>

@@ -67,6 +67,9 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     mTrailer1=(TextView)findViewById(R.id.textViewTrailer1);
     mTrailer2=(TextView)findViewById(R.id.textViewTrailer2) ;
     favMarkButton=(ImageButton)findViewById(R.id.markAsFavButton);
+    if(markedFav==1){
+      favMarkButton.setImageResource(R.drawable.ic_stars_orange_700_36dp);
+    }
     setTitle(R.string.Movie_details);
     PlayVideoOnClickListener clickListener=new PlayVideoOnClickListener();
     mTrailer1.setOnClickListener(clickListener);
@@ -127,7 +130,7 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
         if (markedFav == 0) {
           String message = movieTitle + " marked as Favourite";
           Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
-          favMarkButton.setImageResource(R.drawable.ic_stars_orange_800_36dp);
+          favMarkButton.setImageResource(R.drawable.ic_stars_orange_700_36dp);
           addToDb();
           markedFav = 1;
 
@@ -150,7 +153,6 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     Uri uri= FavouriteMoviesEntry.CONTENT_URI;
     uri=uri.buildUpon().appendPath(id).build();
     getContentResolver().delete(uri,null,null);
-    finish();
 
   }
 
@@ -165,7 +167,6 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
     contentValues.put(FavouriteMoviesEntry.COLUMN_MOVIE_ID,id);
 
     getContentResolver().insert(FavouriteMoviesEntry.CONTENT_URI,contentValues);
-    finish();
   }
 
   @Override
@@ -214,8 +215,8 @@ public class MovieDetails extends AppCompatActivity implements LoaderManager.Loa
 
   @Override
   public void onLoaderReset(Loader<ArrayList<ArrayList<String>>> loader) {
-      sTrailers=null;
-      sReviews=null;
+    sTrailers=null;
+    sReviews=null;
   }
 
 }
