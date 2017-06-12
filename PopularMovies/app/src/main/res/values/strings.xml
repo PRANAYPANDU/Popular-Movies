@@ -5,18 +5,5 @@
   <string name="Movie_details">Movie Details</string>
   <string name="no_internet_connection">No Internet Connection</string>
   <string name="no_movies">No Movies found.</string>
-  <string name="popularMoviesURL">http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936</string>
-  <string name="topRatedMoviesURL">http://api.themoviedb.org/3/movie/top_rated?api_key=857710a9c17b11d80aa32f98d00aa936</string>
-  <string name="results_query_word">results</string>
-  <string name="poster_query_word">poster_path</string>
-  <string name="overview_query_word">overview</string>
-  <string name="title_query_word">original_title</string>
-  <string name="rating_query_word">vote_average</string>
-  <string name="release_date_query_word">release_date</string>
-  <string name="connection_opened">Connection opened</string>
-  <string name="connected">Connected</string>
-  <string name="responseCode">got response code</string>
-  <string name="ERROR_MESSAGE">Problem retrieving informtaion</string>
-  <string name="ERROR_URL">Problem building the URL</string>
-  <string name="base_poster_URL">http://image.tmdb.org/t/p//w185/</string>
+  <string name="favourite_movies">Favourite Movies</string>
 </resources>

@@ -25,6 +25,12 @@
           android:name="android.support.PARENT_ACTIVITY"
           android:value="com.example.pranaykumar.popularmovies.MainActivity" />
     </activity>
+    //Registering content provider
+    <provider
+      android:name="com.example.pranaykumar.popularmovies.data.PopularMoviesContentProvider"
+      android:authorities="com.example.pranaykumar.popularmovies"
+      android:exported="false"/>
   </application>
+
 
 </manifest>
