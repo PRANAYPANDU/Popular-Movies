@@ -1,7 +1,9 @@
 package com.example.pranaykumar.popularmovies;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import android.util.Log;
+import com.example.pranaykumar.popularmovies.data.PopularMoviesDbHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -114,8 +116,8 @@ public class QueryUtils {
         Double rating = currentMovie.getDouble("vote_average");
         String Rdate = currentMovie.getString("release_date");
         String id=currentMovie.getString("id");
-
-        Movie movie = new Movie(title, poster_path, overView, rating, Rdate,id);
+        int isFav=0;
+        Movie movie = new Movie(title, poster_path, overView, rating, Rdate,id,isFav);
         movies.add(movie);
       }
     } catch (JSONException e) {

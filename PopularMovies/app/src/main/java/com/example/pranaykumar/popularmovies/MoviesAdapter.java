@@ -56,7 +56,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
     holder.mLayout.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent=new Intent(context,MovieDetails.class);
+        Intent intent=new Intent(context,MovieDetailsActivity.class);
         intent.putExtra("movie", (android.os.Parcelable) mMoviesData.get(position));
 
         context.startActivity(intent);

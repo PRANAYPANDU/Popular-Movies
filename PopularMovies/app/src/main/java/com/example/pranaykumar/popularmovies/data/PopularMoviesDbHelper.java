@@ -15,7 +15,7 @@ public class PopularMoviesDbHelper extends SQLiteOpenHelper{
   public static final int DATABASE_VERSION=2;
   SQLiteDatabase db;
 
-  PopularMoviesDbHelper(Context context) {
+  public PopularMoviesDbHelper(Context context) {
     super(context,DATABASE,null,DATABASE_VERSION);
     db=getWritableDatabase();
   }
@@ -28,7 +28,7 @@ public class PopularMoviesDbHelper extends SQLiteOpenHelper{
             FavouriteMoviesEntry.COLUMN_NAME + " TEXT NOT NULL, " +
             FavouriteMoviesEntry.COLUMN_POSTER + " TEXT NOT NULL, " +
             FavouriteMoviesEntry.COLUMN_DATE + " TEXT NOT NULL, " +
-            FavouriteMoviesEntry.COLUMN_RATING + " TEXT NOT NULL, " +
+            FavouriteMoviesEntry.COLUMN_RATING + " DOUBLE NOT NULL, " +
             FavouriteMoviesEntry.COLUMN_OVERVIEW + " TEXT NOT NULL, " +
             FavouriteMoviesEntry.COLUMN_MOVIE_ID + " TEXT NOT NULL);";
     Log.d("O_MY","in dbHelper onCreate");

@@ -1,6 +1,7 @@
 package com.example.pranaykumar.popularmovies;
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
@@ -33,9 +34,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   private TextView mEmptyStateTextView;
   private RecyclerView mRecyclerView;
   private MoviesAdapter mMoviesAdapter;
+  private int mPosition;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+
+    if(getIntent()!=null){
+      Intent intent=getIntent();
+      int i=intent.getFlags();
+      if(i==2){
+        final_url=top_ratedMoviesDB_REQUEST_URL;
+        setTitle(R.string.sortBy_top_rated_Movies);
+      }
+
+    }
     movies=new ArrayList<Movie>();
     Log.d("O_MY", String.valueOf(movies.size()));
     super.onCreate(savedInstanceState);
@@ -57,17 +69,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     mMoviesAdapter=new MoviesAdapter(movies);
     mRecyclerView.setAdapter(mMoviesAdapter);
-
-    /*//Setup the item click listener
-    .setOnItemClickListener(new AdapterView.OnItemClickListener() {
-      @Override
-      public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent=new Intent(MainActivity.this,MovieDetails.class);
-        intent.putExtra("movie",movies.get(position));
-        startActivity(intent);
-
-      }}
-    );*/
 
     //Get a reference to the ConnectivityManager to check state of network connectivity
     ConnectivityManager connMgr=(ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -103,7 +104,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     loadingIndicator.setVisibility(View.GONE);
     // Set empty state text to display "No Movies found."
     mEmptyStateTextView.setText(R.string.no_movies);
-
+    if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+    mRecyclerView.smoothScrollToPosition(mPosition);
 
     if(data!=null&&!data.isEmpty()){
       mMoviesAdapter.setmMoviesData(data);
@@ -138,7 +140,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setTitle(getString(R.string.sortBy_top_rated_Movies));
         return true;
       case R.id.sortBy_favourite_Movies:
-        setTitle(R.string.favourite_movies);
+        Intent favIntent=new Intent(MainActivity.this,FavouriteMoviesActivity.class);
+        startActivity(favIntent);
     }
     return super.onOptionsItemSelected(item);
   }

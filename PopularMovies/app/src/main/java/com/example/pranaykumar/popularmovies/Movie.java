@@ -15,6 +15,7 @@ public class Movie implements Parcelable {
   private double mRating;
   private String mDate;
   private String mID;
+  private int mIsFav;
 
   /*
   *Create a new Movie Object.
@@ -24,14 +25,14 @@ public class Movie implements Parcelable {
   * */
 
   public Movie(String vTitle, String imageResourceURL, String vOverView, double vRating,
-      String vDate,String id) {
+      String vDate,String id,int isFav) {
     mMovieTitle = vTitle;
     mImageResourceURL = imageResourceURL;
     mOverView = vOverView;
     mRating = vRating;
     mDate = vDate;
     mID=id;
-
+    mIsFav=isFav;
   }
 
   public Movie(Parcel source) {
@@ -41,6 +42,7 @@ public class Movie implements Parcelable {
     mRating = source.readDouble();
     mDate = source.readString();
     mID=source.readString();
+    mIsFav=source.readInt();
   }
 
   //Get the title of the movie
@@ -67,6 +69,8 @@ public class Movie implements Parcelable {
 
   public String getmId(){return mID;}
 
+  public int getmIsFav(){return mIsFav;}
+
 
   @Override public int describeContents() {
     return 0;
@@ -79,6 +83,7 @@ public class Movie implements Parcelable {
     dest.writeDouble(mRating);
     dest.writeString(mDate);
     dest.writeString(mID);
+    dest.writeInt(mIsFav);
   }
 
   public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {

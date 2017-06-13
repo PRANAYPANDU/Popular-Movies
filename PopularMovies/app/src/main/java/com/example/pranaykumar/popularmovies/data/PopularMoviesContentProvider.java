@@ -51,7 +51,27 @@ public class PopularMoviesContentProvider extends ContentProvider {
   @Override
   public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
       @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-    return null;
+    Cursor cursor;
+
+    switch (sUriMatcher.match(uri)){
+      case MOVIES: {
+        cursor = moviesDbHelper.getReadableDatabase().query(
+            FavouriteMoviesEntry.TABLE_NAME,
+            projection,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            sortOrder
+        );
+        break;
+      }
+        default:
+          throw new UnsupportedOperationException("Unknown uri: " + uri);
+    }
+
+    cursor.setNotificationUri(getContext().getContentResolver(), uri);
+    return cursor;
   }
 
   @Nullable
