@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
-import android.opengl.Visibility;
-import android.os.StrictMode;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -14,11 +14,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager.Properties;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.example.pranaykumar.popularmovies.data.PopularMoviesContract.FavouriteMoviesEntry;
 
 public class FavouriteMoviesActivity extends AppCompatActivity
@@ -37,7 +37,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
   private FavouriteMoviesAdapter favouriteMoviesAdapter;
   private RecyclerView mRecyclerView;
   private int mPosition=RecyclerView.NO_POSITION;
-
+  private TextView mEmptyStateTextView;
   private ProgressBar mLoadingIndicator;
 
   private Context context;
@@ -45,22 +45,22 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_favourite_movies);
+
     setTitle(R.string.favourite_movies);
     context=this;
     mRecyclerView=(RecyclerView)findViewById(R.id.Frecyclerview_movies);
     mLoadingIndicator=(ProgressBar)findViewById(R.id.Floading_indicator);
-    int columnsCount=2;
-    if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
-      columnsCount=4;
-    }
+    mEmptyStateTextView=(TextView)findViewById(R.id.Fempty_view);
+
     GridLayoutManager gridLayoutManager
-        =new GridLayoutManager(this,columnsCount);
+        =new GridLayoutManager(this,Utility.calculateNoOfColumns(getApplicationContext()));
     mRecyclerView.setLayoutManager(gridLayoutManager);
     mRecyclerView.setHasFixedSize(true);
     favouriteMoviesAdapter=new FavouriteMoviesAdapter(this);
     mRecyclerView.setAdapter(favouriteMoviesAdapter);
     showLoading();
     getSupportLoaderManager().initLoader(ID_FAVOURITE_MOVIES_LOADER,null,this);
+
 
   }
 
@@ -96,6 +96,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
         startActivity(intent1);
         break;
 
+
     }
     return super.onOptionsItemSelected(item);
   }
@@ -122,12 +123,15 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
     favouriteMoviesAdapter.swapCursor(data);
-    if(mPosition==RecyclerView.NO_POSITION)mPosition=0;
-    mRecyclerView.smoothScrollToPosition(mPosition);
+
+    //if(mPosition==RecyclerView.NO_POSITION)mPosition=0;
+    //mRecyclerView.smoothScrollToPosition(mPosition);
     if(data.getCount()!=0){
       mLoadingIndicator.setVisibility(View.INVISIBLE);
       mRecyclerView.setVisibility(View.VISIBLE);
-
+    }else{
+      mLoadingIndicator.setVisibility(View.INVISIBLE);
+      mEmptyStateTextView.setText("No Favourite Movies");
     }
   }
 

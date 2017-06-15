@@ -15,23 +15,29 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build.VERSION_CODES;
+
 import android.support.annotation.RequiresApi;
+
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Base64;
+
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.pranaykumar.popularmovies.data.PopularMoviesContract;
+
 import com.example.pranaykumar.popularmovies.data.PopularMoviesContract.FavouriteMoviesEntry;
 import com.example.pranaykumar.popularmovies.data.PopularMoviesDbHelper;
 import com.squareup.picasso.Picasso;
-import java.io.ByteArrayOutputStream;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,11 +77,12 @@ Cursor cursor;
   };
   private static  String selection;
   private static String[] selectionArgs;
+  private ShareActionProvider mShareActionProvider;
+
   @RequiresApi(api = VERSION_CODES.JELLY_BEAN)
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_movie_details);
-
 
     mTitle=(TextView)findViewById(R.id.titleTextView);
     mPoster=(ImageView)findViewById(R.id.posterImageView);
@@ -166,6 +173,17 @@ Cursor cursor;
         }
       }
     });
+
+  }
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case android.R.id.home:
+        onBackPressed();
+        return true;
+    }
+
+    return(super.onOptionsItemSelected(item));
   }
 
   private void removeFromFav() {
@@ -225,6 +243,7 @@ Cursor cursor;
 
   }
 
+
   private void setUI() {
     Log.d(LOG_TAG, "in setUI");
     int i = 0;
@@ -232,8 +251,9 @@ Cursor cursor;
     Log.d(LOG_TAG,"sReviews size="+s);
     while (s>0) {
       ReviewsTotal = ReviewsTotal
-          + "<b>\n\n------------------------------------------------------------------------\n\n</b>"
-          + (i + 1) + "." + sReviews.get(i);
+          +"<p></br>"
+          + (i + 1) + "." + sReviews.get(i)
+          +"</br></p>";
       i++;
       s--;
     }
@@ -256,5 +276,6 @@ Cursor cursor;
     sTrailers=null;
     sReviews=null;
   }
+
 
 }

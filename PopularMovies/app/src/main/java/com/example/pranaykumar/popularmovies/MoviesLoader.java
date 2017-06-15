@@ -9,6 +9,7 @@ import java.util.ArrayList;
  */
 
 public class MoviesLoader extends AsyncTaskLoader<ArrayList<Movie>> {
+
   private static final String LOG_TAG = MoviesLoader.class.getSimpleName();
   private String mUrl;
 
@@ -17,11 +18,13 @@ public class MoviesLoader extends AsyncTaskLoader<ArrayList<Movie>> {
     mUrl = movies_url;
   }
 
-  @Override protected void onStartLoading() {
+  @Override
+  protected void onStartLoading() {
     forceLoad();
   }
 
-  @Override public ArrayList<Movie> loadInBackground() {
+  @Override
+  public ArrayList<Movie> loadInBackground() {
     if (mUrl == null) {
       return null;
     }

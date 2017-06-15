@@ -28,36 +28,39 @@ public class QueryUtils {
 
   private QueryUtils() {
   }
-  public static ArrayList<String> fetchVideos(String videoUrl){
-    URL vUrl=createUrl(videoUrl);
 
-    String jsonResp=null;
-    jsonResp=makeHttpRequest(vUrl);
-    ArrayList<String> videos=extractVideoFromJson(jsonResp);
+  public static ArrayList<String> fetchVideos(String videoUrl) {
+    URL vUrl = createUrl(videoUrl);
+
+    String jsonResp = null;
+    jsonResp = makeHttpRequest(vUrl);
+    ArrayList<String> videos = extractVideoFromJson(jsonResp);
     return videos;
   }
-  public static ArrayList<String> fetchReviews(String reviewsUrl){
-    URL vUrl=createUrl(reviewsUrl);
 
-    String jsonResp=null;
-    jsonResp=makeHttpRequest(vUrl);
-    ArrayList<String> reviews=extractReviewFromJson(jsonResp);
+  public static ArrayList<String> fetchReviews(String reviewsUrl) {
+    URL vUrl = createUrl(reviewsUrl);
+
+    String jsonResp = null;
+    jsonResp = makeHttpRequest(vUrl);
+    ArrayList<String> reviews = extractReviewFromJson(jsonResp);
     return reviews;
   }
 
   private static ArrayList<String> extractReviewFromJson(String jsonResp) {
-    if(TextUtils.isEmpty(jsonResp)){
+    if (TextUtils.isEmpty(jsonResp)) {
       return null;
     }
-    ArrayList<String> reviews=new ArrayList<>();
-    try{
-      JSONObject baseJson=new JSONObject(jsonResp);
-      JSONArray results=baseJson.getJSONArray("results");
-      for(int i=0;i<results.length();i++){
-        JSONObject currentReview=results.getJSONObject(i);
-        String author=currentReview.getString("author");
+    ArrayList<String> reviews = new ArrayList<>();
+    try {
+      JSONObject baseJson = new JSONObject(jsonResp);
+      JSONArray results = baseJson.getJSONArray("results");
+      for (int i = 0; i < results.length(); i++) {
+        JSONObject currentReview = results.getJSONObject(i);
+        String author = currentReview.getString("author");
 
-        reviews.add("<b>A review by :"+author+"</b>"+"<br>"+currentReview.getString("content"));
+        reviews.add(
+            "<b>A review by :" + author + "</b>" + "<br>" + currentReview.getString("content"));
 
       }
     } catch (JSONException e) {
@@ -79,16 +82,16 @@ public class QueryUtils {
   }
 
   private static ArrayList<String> extractVideoFromJson(String jsonResp) {
-    if(TextUtils.isEmpty(jsonResp)){
+    if (TextUtils.isEmpty(jsonResp)) {
       return null;
     }
-    ArrayList<String> videos=new ArrayList<>();
-    try{
-      JSONObject baseJson=new JSONObject(jsonResp);
-      JSONArray results=baseJson.getJSONArray("results");
-      for(int i=0;i<results.length();i++){
-        JSONObject currentTrailer=results.getJSONObject(i);
-        if(currentTrailer.getString("type").equals("Trailer")){
+    ArrayList<String> videos = new ArrayList<>();
+    try {
+      JSONObject baseJson = new JSONObject(jsonResp);
+      JSONArray results = baseJson.getJSONArray("results");
+      for (int i = 0; i < results.length(); i++) {
+        JSONObject currentTrailer = results.getJSONObject(i);
+        if (currentTrailer.getString("type").equals("Trailer")) {
           videos.add(currentTrailer.getString("key"));
         }
       }
@@ -97,6 +100,7 @@ public class QueryUtils {
     }
     return videos;
   }
+
   private static ArrayList<Movie> extractFeatureFromJson(String jsonResponse) {
     //If the JSON string is empty or null,then return early.
     if (TextUtils.isEmpty(jsonResponse)) {
@@ -115,9 +119,9 @@ public class QueryUtils {
         String title = currentMovie.getString("original_title");
         Double rating = currentMovie.getDouble("vote_average");
         String Rdate = currentMovie.getString("release_date");
-        String id=currentMovie.getString("id");
-        int isFav=0;
-        Movie movie = new Movie(title, poster_path, overView, rating, Rdate,id,isFav);
+        String id = currentMovie.getString("id");
+        int isFav = 0;
+        Movie movie = new Movie(title, poster_path, overView, rating, Rdate, id, isFav);
         movies.add(movie);
       }
     } catch (JSONException e) {
