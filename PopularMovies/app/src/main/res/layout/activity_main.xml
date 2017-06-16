@@ -1,26 +1,41 @@
-<RelativeLayout
+<layout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-
-  <android.support.v7.widget.RecyclerView
-    android:id="@+id/recyclerview_movies"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+  <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-  <!-- Empty view is only visible when the list has no items. -->
-  <TextView
-    android:id="@+id/empty_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:textAppearance="?android:textAppearanceMedium"/>
+    android:layout_height="match_parent">
 
-  <!-- Loading indicator is only shown before the first load -->
-  <ProgressBar
-    android:id="@+id/loading_indicator"
-    style="@style/Widget.AppCompat.ProgressBar"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"/>
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/recyclerview_movies"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toLeftOf="@+id/loading_indicator"
+      app:layout_constraintTop_toTopOf="parent"
+></android.support.v7.widget.RecyclerView>
+    <!-- Empty view is only visible when the list has no items. -->
+    <TextView
+      android:id="@+id/empty_view"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textAppearance="?android:textAppearanceMedium"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="@+id/loading_indicator"/>
 
-</RelativeLayout>
+    <!-- Loading indicator is only shown before the first load -->
+    <ProgressBar
+      android:id="@+id/loading_indicator"
+      style="@style/Widget.AppCompat.ProgressBar"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toRightOf="@+id/empty_view"
+      app:layout_constraintRight_toRightOf="@+id/empty_view"
+      app:layout_constraintTop_toTopOf="parent"
+/>
+
+  </android.support.constraint.ConstraintLayout>
+</layout>

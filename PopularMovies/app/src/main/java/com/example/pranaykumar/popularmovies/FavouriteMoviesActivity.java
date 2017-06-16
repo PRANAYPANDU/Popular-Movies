@@ -2,10 +2,8 @@ package com.example.pranaykumar.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -13,16 +11,16 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import com.example.pranaykumar.popularmovies.data.PopularMoviesContract.FavouriteMoviesEntry;
+import com.example.pranaykumar.popularmovies.databinding.ActivityFavouriteMoviesBinding;
 
 public class FavouriteMoviesActivity extends AppCompatActivity
 implements LoaderManager.LoaderCallbacks<Cursor>{
+ActivityFavouriteMoviesBinding favouriteMoviesBinding;
   private static final int ID_FAVOURITE_MOVIES_LOADER=56;
 
   static final String[] FAV_MOVIES_PROJECTION={
@@ -35,10 +33,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
   };
 
   private FavouriteMoviesAdapter favouriteMoviesAdapter;
-  private RecyclerView mRecyclerView;
-  private int mPosition=RecyclerView.NO_POSITION;
-  private TextView mEmptyStateTextView;
-  private ProgressBar mLoadingIndicator;
+
 
   private Context context;
   @Override
@@ -48,16 +43,14 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
 
     setTitle(R.string.favourite_movies);
     context=this;
-    mRecyclerView=(RecyclerView)findViewById(R.id.Frecyclerview_movies);
-    mLoadingIndicator=(ProgressBar)findViewById(R.id.Floading_indicator);
-    mEmptyStateTextView=(TextView)findViewById(R.id.Fempty_view);
 
+    favouriteMoviesBinding= DataBindingUtil.setContentView(this,R.layout.activity_favourite_movies);
     GridLayoutManager gridLayoutManager
         =new GridLayoutManager(this,Utility.calculateNoOfColumns(getApplicationContext()));
-    mRecyclerView.setLayoutManager(gridLayoutManager);
-    mRecyclerView.setHasFixedSize(true);
+    favouriteMoviesBinding.FrecyclerviewMovies.setLayoutManager(gridLayoutManager);
+    favouriteMoviesBinding.FrecyclerviewMovies.setHasFixedSize(true);
     favouriteMoviesAdapter=new FavouriteMoviesAdapter(this);
-    mRecyclerView.setAdapter(favouriteMoviesAdapter);
+    favouriteMoviesBinding.FrecyclerviewMovies.setAdapter(favouriteMoviesAdapter);
     showLoading();
     getSupportLoaderManager().initLoader(ID_FAVOURITE_MOVIES_LOADER,null,this);
 
@@ -65,8 +58,8 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
   }
 
   private void showLoading() {
-    mRecyclerView.setVisibility(View.INVISIBLE);
-    mLoadingIndicator.setVisibility(View.VISIBLE);
+    favouriteMoviesBinding.FrecyclerviewMovies.setVisibility(View.INVISIBLE);
+    favouriteMoviesBinding.FloadingIndicator.setVisibility(View.VISIBLE);
   }
 
   @Override
@@ -115,7 +108,7 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
             null
             );
       default:
-        throw new RuntimeException("Loader Not Implemented: " + id);
+        throw new RuntimeException(getString(R.string.Loader_Not_implemented) + id);
 
     }
   }
@@ -127,11 +120,11 @@ implements LoaderManager.LoaderCallbacks<Cursor>{
     //if(mPosition==RecyclerView.NO_POSITION)mPosition=0;
     //mRecyclerView.smoothScrollToPosition(mPosition);
     if(data.getCount()!=0){
-      mLoadingIndicator.setVisibility(View.INVISIBLE);
-      mRecyclerView.setVisibility(View.VISIBLE);
+favouriteMoviesBinding.FloadingIndicator.setVisibility(View.INVISIBLE);
+      favouriteMoviesBinding.FrecyclerviewMovies.setVisibility(View.VISIBLE);
     }else{
-      mLoadingIndicator.setVisibility(View.INVISIBLE);
-      mEmptyStateTextView.setText("No Favourite Movies");
+      favouriteMoviesBinding.FloadingIndicator.setVisibility(View.INVISIBLE);
+      favouriteMoviesBinding.FemptyView.setText(R.string.No_Favourites);
     }
   }
 

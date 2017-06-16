@@ -6,4 +6,15 @@
   <string name="no_internet_connection">No Internet Connection</string>
   <string name="no_movies">No Movies found.</string>
   <string name="favourite_movies">Favourite Movies</string>
+  <string name="Loader_Not_implemented">Loader Not Implemented:</string>
+  <string name="No_Favourites">No Favourite Movies</string>
+  <string name="marked_as_fav">marked as Favourite</string>
+  <string name="removed_from_fav">removed from Favourites</string>
+  <string name="Youtube_link">http://www.youtube.com/watch?v=</string>
+  <string name="type">type</string>
+  <string name="Trailer">Trailer</string>
+  <string name="key">key</string>
+  <string name="id">id</string>
+  <string name="Failed_to_insert_data">Failed to insert data into</string>
+  <string name="Unknown_URI">Unknown URI:</string>
 </resources>

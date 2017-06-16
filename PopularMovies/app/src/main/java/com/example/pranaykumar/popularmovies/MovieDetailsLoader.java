@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 
 public class MovieDetailsLoader extends AsyncTaskLoader<ArrayList<ArrayList<String>>> {
-  private final String LOG_TAG="O_MY_GOD:";
   private String mVideosURL;
   private String mReviewsURL;
 
@@ -19,7 +18,6 @@ public class MovieDetailsLoader extends AsyncTaskLoader<ArrayList<ArrayList<Stri
     super(context);
     mVideosURL=videosURL;
     mReviewsURL=reviewsURL;
-    Log.d(LOG_TAG,"urls set");
   }
   @Override protected void onStartLoading() {
     forceLoad();
@@ -32,10 +30,8 @@ public class MovieDetailsLoader extends AsyncTaskLoader<ArrayList<ArrayList<Stri
     ArrayList<String> videos=QueryUtils.fetchVideos(mVideosURL);
     ArrayList<String> reviews=QueryUtils.fetchReviews(mReviewsURL);
     ArrayList<ArrayList<String>>details= new ArrayList<>();
-    Log.d(LOG_TAG,"videos,reviews set");
     details.add(0,videos);
     details.add(1,reviews);
-    Log.d(LOG_TAG,"into details arraylist");
     return  details;
   }
 }

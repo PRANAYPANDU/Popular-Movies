@@ -3,37 +3,35 @@ import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.res.Configuration;
+import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import com.example.pranaykumar.popularmovies.databinding.ActivityMainBinding;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Movie>>{
 
   private static final int MOVIES_LOADER_ID=1;
+  ActivityMainBinding mainBinding;
 
   //URL for popular movies,insert your API key in place of YourAPIKey
-  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936";
+  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=YOUR_API_KEY";
   //URL for top rated movies,insert your API key in place of YourAPIKey
-  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=857710a9c17b11d80aa32f98d00aa936";
+  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=YOUR_API_KEY";
 
   private String final_url=PopularmoviesDB_REQUEST_URL;
 
   ArrayList<Movie> movies;
 
   /**TextView that is displayed when the lsit is empty*/
-  private TextView mEmptyStateTextView;
-  private RecyclerView mRecyclerView;
+
   private MoviesAdapter mMoviesAdapter;
   private int mPosition;
 
@@ -50,24 +48,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
     movies=new ArrayList<Movie>();
-    Log.d("O_MY", String.valueOf(movies.size()));
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    //GridView gridView=(GridView)findViewById(R.id.grid_view);
-    mRecyclerView=(RecyclerView)findViewById(R.id.recyclerview_movies);
+    mainBinding= DataBindingUtil.setContentView(this,R.layout.activity_main);
 
-    mEmptyStateTextView=(TextView)findViewById(R.id.empty_view);
 
     GridLayoutManager gridLayoutManager
         =new GridLayoutManager(this,Utility.calculateNoOfColumns(getApplicationContext()));
 
-    mRecyclerView.setLayoutManager(gridLayoutManager);
-    mRecyclerView.setHasFixedSize(true);
+    mainBinding.recyclerviewMovies.setLayoutManager(gridLayoutManager);
+    mainBinding.recyclerviewMovies.setHasFixedSize(true);
 
 
 
     mMoviesAdapter=new MoviesAdapter(movies);
-    mRecyclerView.setAdapter(mMoviesAdapter);
+    mainBinding.recyclerviewMovies.setAdapter(mMoviesAdapter);
 
     //Get a reference to the ConnectivityManager to check state of network connectivity
     ConnectivityManager connMgr = (ConnectivityManager) getSystemService(
@@ -87,10 +82,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
       loaderManager.initLoader(MOVIES_LOADER_ID,null,this);
     }
     else{
-      View loadingIndicator=findViewById(R.id.loading_indicator);
-      loadingIndicator.setVisibility(View.GONE);
+      mainBinding.loadingIndicator.setVisibility(View.GONE);
 
-      mEmptyStateTextView.setText(R.string.no_internet_connection);
+      mainBinding.emptyView.setText(R.string.no_internet_connection);
     }
   }
 
@@ -100,16 +94,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   }
 
   @Override public void onLoadFinished(Loader<ArrayList<Movie>> loader, ArrayList<Movie> data) {
-    View loadingIndicator = findViewById(R.id.loading_indicator);
-    loadingIndicator.setVisibility(View.GONE);
+
+    mainBinding.loadingIndicator.setVisibility(View.GONE);
     // Set empty state text to display "No Movies found."
-    mEmptyStateTextView.setText(R.string.no_movies);
-    //if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
-    //mRecyclerView.smoothScrollToPosition(mPosition);
+    mainBinding.emptyView.setText(R.string.no_movies);
 
     if(data!=null&&!data.isEmpty()){
+      Log.d("O_MY", String.valueOf(data.size()));
       mMoviesAdapter.setmMoviesData(data);
-      mEmptyStateTextView.setVisibility(View.GONE);
+      mainBinding.emptyView.setVisibility(View.GONE);
     }
   }
 

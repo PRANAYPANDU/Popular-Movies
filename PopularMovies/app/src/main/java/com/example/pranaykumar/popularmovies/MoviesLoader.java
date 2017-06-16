@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class MoviesLoader extends AsyncTaskLoader<ArrayList<Movie>> {
 
-  private static final String LOG_TAG = MoviesLoader.class.getSimpleName();
   private String mUrl;
 
   public MoviesLoader(Context context, String movies_url) {

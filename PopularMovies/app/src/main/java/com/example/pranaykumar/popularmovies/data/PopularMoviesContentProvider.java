@@ -12,6 +12,7 @@ import android.os.CancellationSignal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import com.example.pranaykumar.popularmovies.R;
 import com.example.pranaykumar.popularmovies.data.PopularMoviesContract.FavouriteMoviesEntry;
 
 
@@ -43,7 +44,6 @@ public class PopularMoviesContentProvider extends ContentProvider {
 
     Context context=getContext();
     moviesDbHelper=new PopularMoviesDbHelper(context);
-    Log.d("O_MY","After calling db helper");
     return true;
   }
 
@@ -94,15 +94,14 @@ public class PopularMoviesContentProvider extends ContentProvider {
       case MOVIES:
 
         long id=db.insert(FavouriteMoviesEntry.TABLE_NAME,null,values);
-        Log.d("O_MY","Inserted");
         if(id>0){
           returnUri= ContentUris.withAppendedId(FavouriteMoviesEntry.CONTENT_URI,id);
         }else{
-          throw new android.database.SQLException("Failed to insert data into"+uri);
+          throw new android.database.SQLException(context.getString(R.string.Failed_to_insert_data)+uri);
         }
         break;
       default:
-        throw new UnsupportedOperationException("Unknown URI:"+uri);
+        throw new UnsupportedOperationException(context.getString(R.string.Unknown_URI)+uri);
     }
 
     //Notify the resolver if the uri has been changed and return the newly inserted URI
@@ -122,7 +121,7 @@ public class PopularMoviesContentProvider extends ContentProvider {
         moviesDeleted=db.delete(FavouriteMoviesEntry.TABLE_NAME,"movieID=?",new String[]{MovieId});
         break;
       default:
-        throw new UnsupportedOperationException("Unknown uri:"+uri);
+        throw new UnsupportedOperationException(String.valueOf(R.string.Unknown_URI)+uri);
     }
     if(moviesDeleted!=0){
       getContext().getContentResolver().notifyChange(uri,null);

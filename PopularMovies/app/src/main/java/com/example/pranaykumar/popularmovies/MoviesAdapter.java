@@ -2,6 +2,7 @@ package com.example.pranaykumar.popularmovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +27,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
   }
   @Override
   public MoviesAdapterViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-   context=parent.getContext();
+    context=parent.getContext();
     int layoutIdForGridItem=R.layout.grid_item;
     LayoutInflater inflater=LayoutInflater.from(context);
 
@@ -38,12 +39,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
     public final ImageView mPoster;
     public final LinearLayout mLayout;
 
-  public MoviesAdapterViewHolder(View itemView) {
-    super(itemView);
+    public MoviesAdapterViewHolder(View itemView) {
+      super(itemView);
 
-    mPoster=(ImageView)itemView.findViewById(R.id.poster);
-    mLayout=(LinearLayout)itemView.findViewById(R.id.layout);
-  }
+      mPoster=(ImageView)itemView.findViewById(R.id.poster);
+      mLayout=(LinearLayout)itemView.findViewById(R.id.layout);
+    }
 
   }
   @Override

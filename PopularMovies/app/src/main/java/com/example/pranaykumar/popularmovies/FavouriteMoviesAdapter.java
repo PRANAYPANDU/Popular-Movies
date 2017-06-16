@@ -47,7 +47,7 @@ public class FavouriteMoviesAdapter extends
     final Movie currentMovie = new Movie(mCursor.getString(1), mCursor.getString(0),
         mCursor.getString(4), mCursor.getDouble(3), mCursor.getString(2), mCursor.getString(5), 1);
     String posterId = mCursor.getString(0);
-    String basePosterUrl = "http://image.tmdb.org/t/p//w185/";
+    String basePosterUrl ="http://image.tmdb.org/t/p//w185/";
     String finalPosterUrl;
     finalPosterUrl = basePosterUrl + posterId;
     //Final URL to be passed into Picasso
@@ -58,8 +58,8 @@ public class FavouriteMoviesAdapter extends
     //Get details on the currently active default data network
     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-      Picasso.with(mContext).load(finalPosterUrl).into(holder.mPosterImageView);
-      if(holder.mPosterImageView.isOpaque()){
+    Picasso.with(mContext).load(finalPosterUrl).into(holder.mPosterImageView);
+    if(holder.mPosterImageView.isOpaque()){
       holder.mPosterImageView.setImageResource(
           R.drawable.ic_signal_cellular_connected_no_internet_0_bar_red_a400_48dp);
     }

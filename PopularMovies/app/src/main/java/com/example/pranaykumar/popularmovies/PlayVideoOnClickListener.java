@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 public class PlayVideoOnClickListener implements OnClickListener {
   @Override
   public void onClick(View v) {
-    String url = "http://www.youtube.com/watch?v="+v.getTag();
+    String url = v.getContext().getString(R.string.Youtube_link)+v.getTag();
     Intent i = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
     v.getContext().startActivity(i);
   }

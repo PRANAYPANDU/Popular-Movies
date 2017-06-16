@@ -2,7 +2,6 @@ package com.example.pranaykumar.popularmovies;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.view.View;
 
 /**
  * Created by PRANAYKUMAR on 15-06-2017.
