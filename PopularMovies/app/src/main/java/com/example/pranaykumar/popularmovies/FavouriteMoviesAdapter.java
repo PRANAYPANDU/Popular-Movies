@@ -1,5 +1,7 @@
 package com.example.pranaykumar.popularmovies;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 
@@ -7,6 +9,7 @@ import android.database.Cursor;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,17 +62,16 @@ public class FavouriteMoviesAdapter extends
     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
     Picasso.with(mContext).load(finalPosterUrl).into(holder.mPosterImageView);
-    if(holder.mPosterImageView.isOpaque()){
-      holder.mPosterImageView.setImageResource(
-          R.drawable.ic_signal_cellular_connected_no_internet_0_bar_red_a400_48dp);
-    }
 
     holder.layout.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
         Intent intent = new Intent(mContext, MovieDetailsActivity.class);
         intent.putExtra("movie", (android.os.Parcelable) currentMovie);
-        mContext.startActivity(intent);
+        ActivityOptionsCompat options=ActivityOptionsCompat.makeSceneTransitionAnimation(
+            (Activity)v.getContext(),v.findViewById(R.id.poster),"albumArt"
+        );
+        mContext.startActivity(intent,options.toBundle());
       }
     });
 

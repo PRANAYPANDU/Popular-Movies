@@ -1,8 +1,11 @@
 package com.example.pranaykumar.popularmovies;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +40,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
 
   public class MoviesAdapterViewHolder extends RecyclerView.ViewHolder{
     public final ImageView mPoster;
-    public final LinearLayout mLayout;
+    final LinearLayout mLayout;
+
 
     public MoviesAdapterViewHolder(View itemView) {
       super(itemView);
@@ -48,7 +52,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
 
   }
   @Override
-  public void onBindViewHolder(MoviesAdapterViewHolder holder, final int position) {
+  public void onBindViewHolder(final MoviesAdapterViewHolder holder, final int position) {
     Movie currentMovie=mMoviesData.get(position);
 
     String basePosterUrl="http://image.tmdb.org/t/p//w185/";
@@ -59,8 +63,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
       public void onClick(View v) {
         Intent intent=new Intent(context,MovieDetailsActivity.class);
         intent.putExtra("movie", (android.os.Parcelable) mMoviesData.get(position));
-
-        context.startActivity(intent);
+        ActivityOptionsCompat options=ActivityOptionsCompat.makeSceneTransitionAnimation(
+            (Activity)v.getContext(),v.findViewById(R.id.poster),"albumArt"
+        );
+        context.startActivity(intent,options.toBundle());
       }
     });
   }

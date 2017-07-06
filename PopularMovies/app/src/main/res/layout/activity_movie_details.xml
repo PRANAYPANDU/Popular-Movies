@@ -11,90 +11,90 @@
       android:orientation="vertical"
       tools:context="com.example.pranaykumar.popularmovies.MovieDetailsActivity"
       >
-      <TextView
-        android:id="@+id/titleTextView"
-        android:textStyle="bold"
-        android:layout_width="@dimen/title_width"
-        android:layout_height="@dimen/title_height"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        android:background="@color/colorLabels"
-        android:gravity="center"
-        android:text="Title"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp"
-        />
-
 
       <ImageView
-        android:id="@+id/posterImageView"
-        android:layout_width="@dimen/poster_width"
-        android:layout_height="@dimen/poster_height"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
+        android:id="@+id/poster"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/download"
+        android:transitionName="albumArt"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="-285dp"/>
+      <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:paddingTop="20dp"
+        android:paddingLeft="20dp"
+        android:background="@color/colorLabels"
+        android:textColor="@android:color/white"
+        android:text="Title"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poster"/>
+      <ImageButton
+        android:id="@+id/markAsFavButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/red_circle"
+        android:contentDescription="fab"
+        android:src="@drawable/ic_favorite_white_36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/poster"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/titleTextView"
+        android:layout_marginRight="16dp"
+        />
+      <TextView
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:id="@+id/panel"
+        android:background="#31576b"
+        android:padding="10dp"
+        android:gravity="center"
         app:layout_constraintLeft_toLeftOf="@+id/titleTextView"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        tools:layout_conversion_absoluteHeight="200dp"
-        tools:layout_conversion_absoluteWidth="160dp"
-        tools:layout_conversion_absoluteX="16dp"
-        tools:layout_conversion_absoluteY="100dp"/>
-
+        app:layout_constraintRight_toRightOf="@+id/titleTextView"/>
       <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginLeft="@dimen/margin_16dp"
+        android:layout_margin="24dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        app:layout_constraintLeft_toRightOf="@+id/posterImageView"
-        app:layout_constraintTop_toTopOf="@+id/posterImageView"
-        tools:layout_conversion_absoluteHeight="26dp"
-        tools:layout_conversion_absoluteWidth="50dp"
-        tools:layout_conversion_absoluteX="192dp"
-        tools:layout_conversion_absoluteY="116dp"/>
-
+        app:layout_constraintLeft_toLeftOf="@+id/panel"
+        app:layout_constraintTop_toTopOf="@+id/panel"
+        tools:text="22/05/1996"/>
       <TextView
         android:id="@+id/ratingTextView"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/rating_height"
-        android:layout_marginTop="@dimen/margin"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        app:layout_constraintHorizontal_bias="0.615"
-        app:layout_constraintLeft_toLeftOf="@+id/dateTextView"
-        app:layout_constraintTop_toBottomOf="@+id/dateTextView"
-        tools:layout_conversion_absoluteHeight="26dp"
-        tools:layout_conversion_absoluteWidth="12dp"
-        tools:layout_conversion_absoluteX="192dp"
-        tools:layout_conversion_absoluteY="142dp"
-        />
-
+        app:layout_constraintRight_toRightOf="@+id/panel"
+        app:layout_constraintTop_toTopOf="@+id/panel"
+        tools:text="6/10"/>
 
       <TextView
         android:id="@+id/overviewTextView"
-        android:layout_width="@dimen/overView_textView_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_16dp"
+        android:background="#eeeeee"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        app:layout_constraintLeft_toLeftOf="@+id/posterImageView"
-        app:layout_constraintTop_toBottomOf="@+id/posterImageView"
-        tools:layout_conversion_absoluteHeight="26dp"
-        tools:layout_conversion_absoluteWidth="384dp"
-        tools:layout_conversion_absoluteX="0dp"
-        tools:layout_conversion_absoluteY="316dp"
+        app:layout_constraintLeft_toLeftOf="@+id/panel"
+        app:layout_constraintTop_toBottomOf="@+id/panel"
+        app:layout_constraintRight_toRightOf="@+id/panel"
         tools:text="This is the overView of the movie"/>
       <ImageView
         android:id="@+id/GuideLine1"
-        android:layout_width="@dimen/guideLine_width"
-        android:layout_height="@dimen/Guideline_height"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
         android:layout_marginTop="@dimen/margin_16dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
@@ -106,8 +106,8 @@
         app:srcCompat="@android:color/darker_gray"/>
       <ImageButton
         android:id="@+id/playVideoBtn1"
-        android:layout_width="@dimen/play_video_btn_height"
-        android:layout_height="@dimen/play_video_vtn_width"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="@dimen/margin_32dp"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginLeft="@dimen/margin_16dp"
@@ -129,8 +129,8 @@
         />
       <ImageButton
         android:id="@+id/playVideoBtn2"
-        android:layout_width="@dimen/play_video_vtn_width"
-        android:layout_height="@dimen/play_video_btn_height"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginTop="@dimen/margin_32dp"
         android:layout_marginBottom="@dimen/margin_16dp"
         android:background="?android:attr/colorBackground"
@@ -151,8 +151,8 @@
         app:layout_constraintTop_toBottomOf="@+id/playVideoBtn2"/>
       <ImageView
         android:id="@+id/GuideLine2"
-        android:layout_width="@dimen/guideLine_width"
-        android:layout_height="@dimen/Guideline_height"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
         android:layout_marginTop="@dimen/margin_32dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
@@ -164,7 +164,7 @@
         app:srcCompat="@android:color/darker_gray"/>
       <TextView
         android:id="@+id/text_view_reviews"
-        android:layout_width="@dimen/reviews_width"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_32dp"
         android:layout_marginStart="@dimen/margin_16dp"
@@ -190,8 +190,8 @@
         app:layout_constraintTop_toBottomOf="@+id/GuideLine1"/>
       <ImageView
         android:id="@+id/guideLine3"
-        android:layout_width="@dimen/guideLine_width"
-        android:layout_height="@dimen/Guideline_height"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
         android:layout_marginTop="@dimen/margin_32dp"
         android:layout_marginStart="@dimen/margin"
         android:layout_marginEnd="@dimen/margin"
@@ -211,18 +211,15 @@
         app:layout_constraintLeft_toLeftOf="@+id/GuideLine2"
         app:layout_constraintTop_toBottomOf="@+id/GuideLine2"
         />
-      <ImageButton
-        android:id="@+id/markAsFavButton"
+
+      <android.support.constraint.Guideline
+        android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:background="@android:color/background_light"
-        app:layout_constraintLeft_toLeftOf="@+id/ratingTextView"
-        app:layout_constraintTop_toBottomOf="@+id/ratingTextView"
-        app:srcCompat="@drawable/ic_favorite_border_red_400_36dp"/>
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="101dp"/>
 
 
     </android.support.constraint.ConstraintLayout>

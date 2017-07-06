@@ -1,23 +1,34 @@
 package com.example.pranaykumar.popularmovies;
 
+import static com.example.pranaykumar.popularmovies.R.drawable.red_circle;
+import static com.example.pranaykumar.popularmovies.R.drawable.white_circle;
+
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.text.Html;
+import android.transition.Slide;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +44,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 public class MovieDetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<ArrayList<String >>>{
 
@@ -64,19 +77,25 @@ Cursor cursor;
   private static String[] selectionArgs;
 
   @RequiresApi(api = VERSION_CODES.JELLY_BEAN)
+
   @Override protected void onCreate(Bundle savedInstanceState) {
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_movie_details);
+    ActionBar actionBar = getSupportActionBar();
+    actionBar.hide();
     movieDetailsBinding = DataBindingUtil.setContentView(this,R.layout.activity_movie_details);
 
-
-
-    setTitle(R.string.Movie_details);
     PlayVideoOnClickListener clickListener=new PlayVideoOnClickListener();
     movieDetailsBinding.textViewTrailer1.setOnClickListener(clickListener);
     movieDetailsBinding.textViewTrailer2.setOnClickListener(clickListener);
     movieDetailsBinding.playVideoBtn1.setOnClickListener(clickListener);
     movieDetailsBinding.playVideoBtn2.setOnClickListener(clickListener);
+
+    if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP){
+      setUpTransitions();
+    }
+
 
     Intent intent=getIntent();
       Bundle b=intent.getExtras();
@@ -110,7 +129,8 @@ Cursor cursor;
     finalPosterUrl = basePosterUrl + posterId;
 
     Context context = this;
-    Picasso.with(context).load(finalPosterUrl).into(movieDetailsBinding.posterImageView);
+
+    Picasso.with(context).load(finalPosterUrl).into(movieDetailsBinding.poster);
     movieRating=movieRating+"/10";
 
     movieDetailsBinding.dateTextView.setText(dt1.format(date));
@@ -120,15 +140,15 @@ Cursor cursor;
 
     movieDetailsBinding.ratingTextView.setText(movieRating);
 
+    Bitmap bm = ((BitmapDrawable)movieDetailsBinding.poster.getDrawable()).getBitmap();
+    colorizeFromImage(bm);
+
     ConnectivityManager connMgr =
         (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
     if (networkInfo != null && networkInfo.isConnected()) {
       android.app.LoaderManager loaderManager = getLoaderManager();
       loaderManager.initLoader(LOADER_ID, null, this);
-    }
-    if(isFav==1){
-      movieDetailsBinding.markAsFavButton.setImageResource(R.drawable.ic_favorite_red_a700_36dp);
     }
 
         movieDetailsBinding.markAsFavButton.setOnClickListener(new OnClickListener() {
@@ -138,6 +158,7 @@ Cursor cursor;
           String message = movieTitle + getString(R.string.marked_as_fav);
           Toast.makeText(v.getContext(), message, Toast.LENGTH_SHORT).show();
           movieDetailsBinding.markAsFavButton.setImageResource(R.drawable.ic_favorite_red_a700_36dp);
+          movieDetailsBinding.markAsFavButton.setBackground(getResources().getDrawable(white_circle));
           addToDb();
           isFav = 1;
 
@@ -145,7 +166,8 @@ Cursor cursor;
         else if(isFav==1){
           String message=movieTitle+getString(R.string.removed_from_fav);
           Toast.makeText(v.getContext(),message,Toast.LENGTH_SHORT).show();
-          movieDetailsBinding.markAsFavButton.setImageResource(R.drawable.ic_favorite_border_red_400_36dp);
+          movieDetailsBinding.markAsFavButton.setImageResource(R.drawable.ic_favorite_white_36dp);
+          movieDetailsBinding.markAsFavButton.setBackground(getResources().getDrawable(red_circle));
           removeFromFav();
           isFav=0;
         }
@@ -153,17 +175,21 @@ Cursor cursor;
     });
 
   }
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case android.R.id.home:
-        onBackPressed();
-        return true;
-    }
 
-    return(super.onOptionsItemSelected(item));
+  private void colorizeFromImage(final Bitmap image) {
+        Palette palette = Palette.from(image).generate();
+        // set panel colors
+        int defaultPanelColor = 0xFF808080;
+        movieDetailsBinding.titleTextView.setBackgroundColor(palette.getDarkVibrantColor(defaultPanelColor));
+        movieDetailsBinding.panel.setBackgroundColor(palette.getLightMutedColor(defaultPanelColor));
   }
 
+  private void setUpTransitions() {
+    Slide slide=new Slide(Gravity.BOTTOM);
+    slide.excludeTarget(android.R.id.statusBarBackground,true);
+    getWindow().setEnterTransition(slide);
+    getWindow().setSharedElementsUseOverlay(false);
+  }
   private void removeFromFav() {
     Uri uri= FavouriteMoviesEntry.CONTENT_URI;
     uri=uri.buildUpon().appendPath(id).build();
@@ -203,8 +229,11 @@ Cursor cursor;
     @Override
     protected void onPostExecute(Cursor cursor) {
       if(cursor.getCount()!=0){
-        isFav=1;
-        movieDetailsBinding.markAsFavButton.setImageResource(R.drawable.ic_favorite_red_a700_36dp);
+        if(isFav==1){
+          movieDetailsBinding.markAsFavButton.setImageResource(R.drawable.ic_favorite_red_a700_36dp);
+          movieDetailsBinding.markAsFavButton.setBackground(getResources().getDrawable(white_circle));
+        }
+
       }
     }
   };

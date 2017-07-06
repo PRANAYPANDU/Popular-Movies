@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
   ActivityMainBinding mainBinding;
 
   //URL for popular movies,insert your API key in place of YourAPIKey
-  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=YOUR_API_KEY";
+  private static final String PopularmoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/popular?api_key=857710a9c17b11d80aa32f98d00aa936";
   //URL for top rated movies,insert your API key in place of YourAPIKey
-  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=YOUR_API_KEY";
+  private static final String top_ratedMoviesDB_REQUEST_URL="http://api.themoviedb.org/3/movie/top_rated?api_key=857710a9c17b11d80aa32f98d00aa936";
 
   private String final_url=PopularmoviesDB_REQUEST_URL;
 
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         final_url=top_ratedMoviesDB_REQUEST_URL;
         setTitle(R.string.sortBy_top_rated_Movies);
       }
-
     }
     movies=new ArrayList<Movie>();
     super.onCreate(savedInstanceState);

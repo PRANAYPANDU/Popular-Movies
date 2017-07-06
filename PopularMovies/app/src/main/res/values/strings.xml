@@ -8,8 +8,8 @@
   <string name="favourite_movies">Favourite Movies</string>
   <string name="Loader_Not_implemented">Loader Not Implemented:</string>
   <string name="No_Favourites">No Favourite Movies</string>
-  <string name="marked_as_fav">marked as Favourite</string>
-  <string name="removed_from_fav">removed from Favourites</string>
+  <string name="marked_as_fav"> marked as Favourite</string>
+  <string name="removed_from_fav"> removed from Favourites</string>
   <string name="Youtube_link">http://www.youtube.com/watch?v=</string>
   <string name="type">type</string>
   <string name="Trailer">Trailer</string>
