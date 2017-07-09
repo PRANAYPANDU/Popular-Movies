@@ -32,6 +32,8 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
@@ -69,7 +71,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
   int isFav=0;
   String ReviewsTotal="";
   String finalPosterUrl;
-Cursor cursor;
+  VideoAdapter adapter;
+  Cursor cursor;
+
   private static final String[] FAV_MOVIE_PROJECTION={
       FavouriteMoviesEntry.COLUMN_NAME,
   };
@@ -86,12 +90,16 @@ Cursor cursor;
     actionBar.hide();
     movieDetailsBinding = DataBindingUtil.setContentView(this,R.layout.activity_movie_details);
 
-    PlayVideoOnClickListener clickListener=new PlayVideoOnClickListener();
-    movieDetailsBinding.textViewTrailer1.setOnClickListener(clickListener);
+    adapter= new VideoAdapter(this,new ArrayList<Video>());
+   // Log.d("O_MY", "VideoList Size="+String.valueOf(adapter.getCount()));
+    //PlayVideoOnClickListener clickListener=new PlayVideoOnClickListener(this);
+    /*movieDetailsBinding.textViewTrailer1.setOnClickListener(clickListener);
     movieDetailsBinding.textViewTrailer2.setOnClickListener(clickListener);
     movieDetailsBinding.playVideoBtn1.setOnClickListener(clickListener);
-    movieDetailsBinding.playVideoBtn2.setOnClickListener(clickListener);
+    movieDetailsBinding.playVideoBtn2.setOnClickListener(clickListener);*/
 
+    movieDetailsBinding.videosList.setAdapter(adapter);
+    movieDetailsBinding.videosList.setExpanded(true);
     if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP){
       setUpTransitions();
     }
@@ -130,7 +138,10 @@ Cursor cursor;
 
     Context context = this;
 
-    Picasso.with(context).load(finalPosterUrl).into(movieDetailsBinding.poster);
+    Picasso
+        .with(context)
+        .load(finalPosterUrl)
+        .into(movieDetailsBinding.poster);
     movieRating=movieRating+"/10";
 
     movieDetailsBinding.dateTextView.setText(dt1.format(date));
@@ -140,7 +151,8 @@ Cursor cursor;
 
     movieDetailsBinding.ratingTextView.setText(movieRating);
 
-    Bitmap bm = ((BitmapDrawable)movieDetailsBinding.poster.getDrawable()).getBitmap();
+    Bitmap bm = null;
+    bm=((BitmapDrawable)movieDetailsBinding.poster.getDrawable()).getBitmap();
     colorizeFromImage(bm);
 
     ConnectivityManager connMgr =
@@ -180,8 +192,8 @@ Cursor cursor;
         Palette palette = Palette.from(image).generate();
         // set panel colors
         int defaultPanelColor = 0xFF808080;
-        movieDetailsBinding.titleTextView.setBackgroundColor(palette.getDarkVibrantColor(defaultPanelColor));
-        movieDetailsBinding.panel.setBackgroundColor(palette.getLightMutedColor(defaultPanelColor));
+        movieDetailsBinding.titleTextView.setBackgroundColor(palette.getVibrantColor(defaultPanelColor));
+        movieDetailsBinding.panel.setBackgroundColor(palette.getLightVibrantColor(defaultPanelColor));
   }
 
   private void setUpTransitions() {
@@ -247,25 +259,38 @@ Cursor cursor;
 
 
   private void setUI() {
-    int i = 0;
+    int j = 0;
     int s = sReviews.size();
     while (s>0) {
       ReviewsTotal = ReviewsTotal
           +"<p></br>"
-          + (i + 1) + "." + sReviews.get(i)
+          + (j + 1) + "." + sReviews.get(j)
           +"</br></p>";
-      i++;
+      j++;
       s--;
     }
     int t = sTrailers.size();
-    if(t>0) {
-      movieDetailsBinding.textViewTrailer1.setTag(sTrailers.get(0));
+    Log.d("O_MY", String.valueOf(t));
+    /*  movieDetailsBinding.textViewTrailer1.setTag(sTrailers.get(0));
+      movieDetailsBinding.playVideoBtn1.setTag(sTrailers.get(0));
+
+
       if (t >= 2) {
         movieDetailsBinding.textViewTrailer2.setTag(sTrailers.get(1));
+        movieDetailsBinding.playVideoBtn2.setTag(sTrailers.get(1));
       } else {
         movieDetailsBinding.textViewTrailer2.setVisibility(View.INVISIBLE);
         movieDetailsBinding.markAsFavButton.setVisibility(View.INVISIBLE);
-      }
+      }*/
+    for(int k=0;k<t;k++){
+      String str=sTrailers.get(k);
+      String[] s1=str.split("`");
+
+      adapter.add(new Video(s1[0],s1[1]));
+      Log.d("O_MY","Added a video of pos="+k);
+     // String imgUrl = "http://img.youtube.com/vi/"+sTrailers.get(0)+ "/0.jpg";
+      //ImageButton img=(ImageButton)findViewById(R.id.videoThumbNail);
+      //Picasso.with(this).load(imgUrl).into(img);
     }
     movieDetailsBinding.textViewReviews.setText(Html.fromHtml(ReviewsTotal));
 

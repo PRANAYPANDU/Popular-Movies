@@ -86,9 +86,8 @@ public class QueryUtils {
       JSONArray results = baseJson.getJSONArray("results");
       for (int i = 0; i < results.length(); i++) {
         JSONObject currentTrailer = results.getJSONObject(i);
-        if (currentTrailer.getString("type").equals("Trailer")) {
-          videos.add(currentTrailer.getString("key"));
-        }
+        String s=currentTrailer.getString("key")+"`"+currentTrailer.getString("name");
+        videos.add(s);
       }
     } catch (JSONException e) {
       e.printStackTrace();

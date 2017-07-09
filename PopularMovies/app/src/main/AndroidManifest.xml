@@ -29,6 +29,10 @@
     </activity>
     <activity android:name=".FavouriteMoviesActivity">
     </activity>
+    <activity
+      android:name="com.google.android.youtube.api.StandalonePlayerActivity"
+      android:configChanges="keyboardHidden|orientation|screenSize"
+      />
     //Registering content provider
     <provider
       android:authorities="com.example.pranaykumar.popularmovies"

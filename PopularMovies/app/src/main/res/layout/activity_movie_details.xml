@@ -5,6 +5,7 @@
   <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <android.support.constraint.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -23,7 +24,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="-285dp"/>
+        />
       <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
@@ -51,7 +52,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/titleTextView"
         android:layout_marginRight="16dp"
-        />
+        android:layout_marginEnd="16dp"/>
       <TextView
         android:layout_width="0dp"
         android:layout_height="70dp"
@@ -86,6 +87,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="#eeeeee"
+        android:padding="@dimen/margin_16dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         app:layout_constraintLeft_toLeftOf="@+id/panel"
         app:layout_constraintTop_toBottomOf="@+id/panel"
@@ -95,26 +97,22 @@
         android:id="@+id/GuideLine1"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginTop="@dimen/margin_16dp"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/overviewTextView"
         app:srcCompat="@android:color/darker_gray"/>
+      <!--
       <ImageButton
         android:id="@+id/playVideoBtn1"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="100dp"
+        android:layout_height="60dp"
         android:layout_marginTop="@dimen/margin_32dp"
         android:layout_marginStart="@dimen/margin_16dp"
         android:layout_marginLeft="@dimen/margin_16dp"
         android:background="?android:attr/colorBackground"
         app:layout_constraintLeft_toLeftOf="@+id/GuideLine1"
         app:layout_constraintTop_toBottomOf="@+id/GuideLine1"
-        app:srcCompat="@drawable/ic_play_circle_filled_white_black_36dp"/>
+      />
       <TextView
         android:id="@+id/textViewTrailer1"
         android:layout_width="wrap_content"
@@ -162,21 +160,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTrailer2"
         app:srcCompat="@android:color/darker_gray"/>
-      <TextView
-        android:id="@+id/text_view_reviews"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_32dp"
-        android:layout_marginStart="@dimen/margin_16dp"
-        android:layout_marginEnd="@dimen/margin_16dp"
-        android:layout_marginLeft="@dimen/margin_16dp"
-        android:layout_marginRight="@dimen/margin_16dp"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="@dimen/reviews_textSize"
-        app:layout_constraintLeft_toLeftOf="@+id/GuideLine2"
-        app:layout_constraintRight_toRightOf="@+id/GuideLine2"
-        app:layout_constraintTop_toBottomOf="@+id/GuideLine2"
-        tools:text="Review of the Movie is awesome"/>
+
+
+
+
+-->
       <TextView
         android:id="@+id/trailerLabel"
         android:layout_width="wrap_content"
@@ -188,18 +176,21 @@
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GuideLine1"/>
+      <com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:id="@+id/videosList"
+        app:layout_constraintLeft_toLeftOf="@+id/trailerLabel"
+        app:layout_constraintTop_toBottomOf="@+id/trailerLabel">
+      </com.github.paolorotolo.expandableheightlistview.ExpandableHeightListView>
       <ImageView
         android:id="@+id/guideLine3"
         android:layout_width="0dp"
         android:layout_height="2dp"
-        android:layout_marginTop="@dimen/margin_32dp"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
-        android:layout_marginLeft="@dimen/margin"
-        android:layout_marginRight="@dimen/margin"
-        app:layout_constraintLeft_toLeftOf="@+id/GuideLine1"
+        app:layout_constraintLeft_toLeftOf="@+id/videosList"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewTrailer1"
+        app:layout_constraintTop_toBottomOf="@+id/videosList"
         app:srcCompat="@android:color/darker_gray"/>
       <TextView
         android:id="@+id/reviewsLabel"
@@ -208,20 +199,21 @@
         android:layout_marginTop="@dimen/margin"
         android:text="Reviews:"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
-        app:layout_constraintLeft_toLeftOf="@+id/GuideLine2"
-        app:layout_constraintTop_toBottomOf="@+id/GuideLine2"
+        app:layout_constraintLeft_toLeftOf="@+id/guideLine3"
+        app:layout_constraintTop_toBottomOf="@+id/guideLine3"
         />
 
-      <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+ <TextView
+        android:id="@+id/text_view_reviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="101dp"/>
-
+   android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="@dimen/reviews_textSize"
+   tools:text="Review of the Movie is awesome"
+    app:layout_constraintTop_toBottomOf="@+id/reviewsLabel"
+   app:layout_constraintLeft_toLeftOf="@+id/reviewsLabel"/>
 
     </android.support.constraint.ConstraintLayout>
   </ScrollView>
+
 </layout>
