@@ -15,60 +15,60 @@
 
       <ImageView
         android:id="@+id/poster"
-        android:layout_width="0dp"
-        android:layout_height="400dp"
+        android:layout_width="250dp"
+        android:layout_height="240dp"
         android:scaleType="centerCrop"
         android:src="@drawable/download"
         android:transitionName="albumArt"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         />
       <TextView
         android:id="@+id/titleTextView"
         android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:paddingTop="20dp"
-        android:paddingLeft="20dp"
+        android:gravity="center"
+        android:layout_height="120dp"
         android:background="@color/colorLabels"
         android:textColor="@android:color/white"
         android:text="Title"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poster"/>
+        app:layout_constraintLeft_toRightOf="@+id/poster"
+        app:layout_constraintTop_toTopOf="parent"
+        />
       <ImageButton
         android:id="@+id/markAsFavButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:background="@drawable/red_circle"
         android:contentDescription="fab"
         android:elevation="2dp"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:src="@drawable/ic_favorite_white_36dp"
         app:layout_constraintBottom_toBottomOf="@+id/poster"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/titleTextView"
+        app:layout_constraintTop_toTopOf="@+id/overviewTextView"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"/>
       <TextView
         android:layout_width="0dp"
-        android:layout_height="70dp"
+        android:layout_height="120dp"
         android:id="@+id/panel"
         android:background="#31576b"
-        android:padding="10dp"
         android:gravity="center"
         app:layout_constraintLeft_toLeftOf="@+id/titleTextView"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView"
-        app:layout_constraintRight_toRightOf="@+id/titleTextView"/>
+        app:layout_constraintRight_toRightOf="@+id/titleTextView"
+        app:layout_constraintHorizontal_bias="0.0"/>
       <TextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_margin="48dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         app:layout_constraintLeft_toLeftOf="@+id/panel"
         app:layout_constraintTop_toTopOf="@+id/panel"
@@ -77,7 +77,7 @@
         android:id="@+id/ratingTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_margin="48dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         app:layout_constraintRight_toRightOf="@+id/panel"
         app:layout_constraintTop_toTopOf="@+id/panel"
@@ -85,15 +85,18 @@
 
       <TextView
         android:id="@+id/overviewTextView"
-        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#eeeeee"
+        android:layout_width="0dp"
+        android:layout_marginTop="0dp"
         android:padding="@dimen/margin_16dp"
+        android:background="#eeeeee"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        app:layout_constraintLeft_toLeftOf="@+id/panel"
-        app:layout_constraintTop_toBottomOf="@+id/panel"
-        app:layout_constraintRight_toRightOf="@+id/panel"
-        tools:text="This is the overView of the movie"/>
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poster"
+        tools:text="This is the overView of the movie"
+        />
       <ImageView
         android:id="@+id/GuideLine1"
         android:layout_width="0dp"
@@ -111,11 +114,11 @@
         android:layout_marginLeft="@dimen/margin"
         android:text="Trailers:"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
-        android:textSize="@dimen/reviews_textSize"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GuideLine1"/>
       <com.github.paolorotolo.expandableheightlistview.ExpandableHeightGridView
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:id="@+id/videosList"
@@ -137,19 +140,19 @@
         android:layout_margin="@dimen/margin"
         android:text="Reviews:"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.ActionBar.Subtitle"
-        android:textSize="@dimen/reviews_textSize"
+        android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/guideLine3"
         app:layout_constraintTop_toBottomOf="@+id/guideLine3"/>
 
- <TextView
+      <TextView
         android:id="@+id/text_view_reviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="@dimen/reviews_textSize"
-    android:text="No Reviews avialable"
-    app:layout_constraintTop_toBottomOf="@+id/reviewsLabel"
-    app:layout_constraintLeft_toLeftOf="@+id/reviewsLabel"/>
+        android:text="No Reviews avialable"
+        app:layout_constraintTop_toBottomOf="@+id/reviewsLabel"
+        app:layout_constraintLeft_toLeftOf="@+id/reviewsLabel"/>
 
     </android.support.constraint.ConstraintLayout>
   </ScrollView>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <group android:checkableBehavior="single"
+    >
+    <item
+      android:id="@+id/nav_popularMovies"
+      android:title="Popular Movies"
+      android:checked="true"/>
+    <item
+      android:id="@+id/nav_topRatedMovies"
+      android:title="Top Rated Movies"/>
+    <item
+      android:id="@+id/nav_nowPlaying"
+      android:title="Now Playing"/>
+    <item
+      android:id="@+id/nav_upcoming"
+      android:title="Up Coming Movies"/>
+    <item
+      android:id="@+id/nav_favouriteMovies"
+      android:title="Favourite Movies"/>
+
+  </group>
+  <item
+    android:id="@+id/nav_share"
+    android:title="Share"/>
+
+</menu>

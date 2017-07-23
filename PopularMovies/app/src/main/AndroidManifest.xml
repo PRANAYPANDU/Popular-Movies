@@ -12,32 +12,43 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
     <activity android:name=".MovieDetailsActivity">
       android:parentActivityName="com.example.pranaykumar.popularmovies.MainActivity" >
       android:launchMode="singleTop"
       <!-- Parent activity meta-data to support 4.0 and lower -->
       <meta-data
         android:name="android.support.PARENT_ACTIVITY"
-        android:value="com.example.pranaykumar.popularmovies.MainActivity"/>
-    </activity>
-    <activity android:name=".FavouriteMoviesActivity">
+        android:value="com.example.pranaykumar.popularmovies.FrontActivity"/>
     </activity>
     <activity
-      android:name="com.google.android.youtube.api.StandalonePlayerActivity"
       android:configChanges="keyboardHidden|orientation|screenSize"
-      />
+      android:name="com.google.android.youtube.api.StandalonePlayerActivity"/>
     //Registering content provider
     <provider
       android:authorities="com.example.pranaykumar.popularmovies"
       android:exported="false"
       android:name=".data.PopularMoviesContentProvider"/>
+
+    <activity
+      android:name=".FrontActivity"
+      android:theme="@style/AppTheme.NoActionBar">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+
+      <meta-data
+        android:name="android.app.searchable"
+        android:resource="@xml/searchable"/>
+    </activity>
+    <activity
+      android:label="@string/title_activity_favourite_movies_nav"
+      android:name=".FavouriteMoviesNavActivity"
+      android:theme="@style/AppTheme.NoActionBar">
+    </activity>
+    <activity android:name=".AboutMe">
+    </activity>
   </application>
 
 </manifest>

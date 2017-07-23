@@ -11,8 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -40,14 +42,16 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
 
   public class MoviesAdapterViewHolder extends RecyclerView.ViewHolder{
     public final ImageView mPoster;
-    final LinearLayout mLayout;
+    final FrameLayout mLayout;
+    public final TextView mMovieName;
 
 
     public MoviesAdapterViewHolder(View itemView) {
       super(itemView);
 
       mPoster=(ImageView)itemView.findViewById(R.id.poster);
-      mLayout=(LinearLayout)itemView.findViewById(R.id.layout);
+      mLayout=(FrameLayout)itemView.findViewById(R.id.layout);
+      mMovieName = (TextView)itemView.findViewById(R.id.movieNameTextView);
     }
 
   }
@@ -55,9 +59,10 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MoviesAdap
   public void onBindViewHolder(final MoviesAdapterViewHolder holder, final int position) {
     Movie currentMovie=mMoviesData.get(position);
 
-    String basePosterUrl="http://image.tmdb.org/t/p//w185/";
+    String basePosterUrl="http://image.tmdb.org/t/p//w500/";
     String finalPosterUrl=basePosterUrl+currentMovie.getmImageResourceID();
     Picasso.with(context).load(finalPosterUrl).into(holder.mPoster);
+    holder.mMovieName.setText(currentMovie.getmMovieTitle());
     holder.mLayout.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {

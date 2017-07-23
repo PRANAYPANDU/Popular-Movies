@@ -15,9 +15,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -62,7 +64,7 @@ public class FavouriteMoviesAdapter extends
     NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
     Picasso.with(mContext).load(finalPosterUrl).into(holder.mPosterImageView);
-
+    holder.mMovieName.setText(currentMovie.getmMovieTitle());
     holder.layout.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -94,12 +96,14 @@ public class FavouriteMoviesAdapter extends
   class FavouriteMoviesAdapterViewHolder extends RecyclerView.ViewHolder {
 
     final ImageView mPosterImageView;
-    private LinearLayout layout;
+    final TextView mMovieName;
+    private FrameLayout layout;
 
     public FavouriteMoviesAdapterViewHolder(View itemView) {
       super(itemView);
       mPosterImageView = (ImageView) itemView.findViewById(R.id.poster);
-      layout = (LinearLayout) itemView.findViewById(R.id.layout);
+      mMovieName=(TextView)itemView.findViewById(R.id.movieNameTextView);
+      layout = (FrameLayout) itemView.findViewById(R.id.layout);
     }
   }
 }
