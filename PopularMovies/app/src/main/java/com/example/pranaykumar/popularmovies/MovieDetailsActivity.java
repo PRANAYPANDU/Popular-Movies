@@ -93,11 +93,14 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
 
     movieDetailsBinding.videosList.setAdapter(adapter);
     movieDetailsBinding.videosList.setExpanded(true);
+<<<<<<< HEAD
     if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
       movieDetailsBinding.videosList.setNumColumns(2);
     }else {
       movieDetailsBinding.videosList.setNumColumns(1);
     }
+=======
+>>>>>>> 00702b6892dace594892ae3fbd39764b7cb13db0
     movieDetailsBinding.videosList.clearFocus();
     if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP){
       setUpTransitions();
@@ -115,7 +118,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     id = currentMovie.getmId();
     isFav=currentMovie.getmIsFav();
     searchDB.execute();
+<<<<<<< HEAD
     searchDBforMovie.execute();
+=======
+>>>>>>> 00702b6892dace594892ae3fbd39764b7cb13db0
     videosURL=moviesDbURL+"movie/"+id+"/videos"+apiKey;
     reviewsURL=moviesDbURL+"movie/"+id+"/reviews"+apiKey;
 
@@ -140,6 +146,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     Picasso
         .with(context)
         .load(finalPosterUrl)
+<<<<<<< HEAD
         .into(movieDetailsBinding.poster, new com.squareup.picasso.Callback() {
           @Override
           public void onSuccess() {
@@ -154,6 +161,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
           }
         });
 
+=======
+        .into(movieDetailsBinding.poster);
+
+>>>>>>> 00702b6892dace594892ae3fbd39764b7cb13db0
     movieRating=movieRating+"/10";
     movieDetailsBinding.dateTextView.setText(dt1.format(date));
     movieDetailsBinding.titleTextView.setText(movieTitle);
@@ -318,6 +329,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements LoaderMan
     }if(!TextUtils.isEmpty(ReviewsTotal)) {
       movieDetailsBinding.textViewReviews.setText(Html.fromHtml(ReviewsTotal));
     }
+<<<<<<< HEAD
+=======
+    movieDetailsBinding.textViewReviews.setText(Html.fromHtml(ReviewsTotal));
+>>>>>>> 00702b6892dace594892ae3fbd39764b7cb13db0
   }
 
   @Override
